@@ -55,12 +55,12 @@ const LANGS = {
          fonts:"family=Tajawal:wght@300;400;700;900&family=Cairo:wght@300;400;600;700;900",
          font:"'Cairo',sans-serif", site:'مَوْلِدي', author:'الفنان الطيب عامر',
          back:'العودة إلى مَوْلِدي', all:'كل المقالات', home:'الرئيسية',
-         readmore:'اقرأ أيضاً', minutes:'دقائق قراءة', catKey:'cat_ar' },
+         readmore:'اقرأ أيضاً', readmore2:'اقرأ ←', minutes:'دقائق قراءة', catKey:'cat_ar' },
   eng: { dir:'ltr', code:'en', file:'eng/index.html',
          fonts:"family=Playfair+Display:wght@400;700;900&family=Lato:wght@300;400;700;900",
          font:"'Lato',sans-serif", site:'Mawlidi', author:'Altayeb Amer',
          back:'Back to Mawlidi', all:'All Articles', home:'Home',
-         readmore:'Read also', minutes:'min read', catKey:'cat_en' }
+         readmore:'Read also', readmore2:'Read →', minutes:'min read', catKey:'cat_en' }
 };
 
 /* ── استخراج مصفوفة ARTS من ملف HTML ── */
@@ -220,6 +220,29 @@ for (const [lang, L] of Object.entries(LANGS)) {
     extractArts(fs.readFileSync(path.join(ROOT, L.file), 'utf8')).map(a => a.id));
 }
 
+/* ── حقن «أبرز المقالات» كـHTML ثابت في الصفحة الرئيسية ──
+   كان القسم يُملأ بالجافاسكربت وقت التشغيل، فيصل جوجل إلى صفحة
+   رئيسية فارغة منه. والبطاقات الآن روابط <a> حقيقية إلى الصفحات
+   المستقلة بدل أزرار تفتح طبقة داخلية — يتبعها الزاحف ويستطيع
+   الزائر مشاركتها. */
+function injectPreview(lang, L, arts) {
+  const file = path.join(ROOT, L.file);
+  let html = fs.readFileSync(file, 'utf8');
+  const cards = arts.slice(0, 3).map(a =>
+    `      <a class="art-card" href="articles/${SLUGS[a.id]}/">
+        <div class="ac-cat">${esc(plain(a[L.catKey] || ''))}</div>
+        <div class="ac-title">${esc(a.title)}</div>
+        <div class="ac-sub">${esc(a.sub || '')}</div>
+        <div class="ac-foot"><span class="ac-time">⏱ ${a.min} ${L.minutes}</span>
+        <span class="rbtn">${L.readmore2}</span></div>
+      </a>`).join('\n');
+  const out = html.replace(
+    /<!-- BUILD:ART-PREV -->[\s\S]*?<!-- \/BUILD:ART-PREV -->/,
+    `<!-- BUILD:ART-PREV -->\n${cards}\n<!-- /BUILD:ART-PREV -->`);
+  if (out !== html) { fs.writeFileSync(file, out); return true; }
+  return false;
+}
+
 const today = new Date().toISOString().slice(0, 10);
 
 const urls = [
@@ -274,6 +297,8 @@ for (const [lang, L] of Object.entries(LANGS)) {
     fs.writeFileSync(path.join(kd, 'index.html'), calendarPage(lang));
     written++;
   }
+
+  if (!CHECK && injectPreview(lang, L, arts)) written++;
 
   // صفحات الثقة: مستقلة وقابلة للفهرسة، وشرط أساسي لقبول AdSense
   for (const slug of trustPage.SLUGS) {

@@ -134,3 +134,7 @@
 .zverdict{text-align:center;font-size:15px;color:var(--gold);margin:16px 0 26px;}
 .zverdict.agree{color:var(--muted);}
 @media(min-width:520px){ .zpair{grid-template-columns:1fr 1fr;} }
+
+/* قسم الشرح: نص يُقرأ، فيلتزم عرض القراءة حتى داخل حاوية عريضة
+   مثل صفحة التقويم (var(--wide)) وإلا بلغ السطر 125 حرفاً */
+.intro-block{max-width:var(--measure);margin-inline:auto;}

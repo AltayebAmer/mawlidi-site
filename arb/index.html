@@ -197,7 +197,7 @@ html,body{height:100%;font-family:'Cairo',sans-serif;background:var(--bg);color:
   border-radius:10px;padding:8px 14px;font-size:11px;color:var(--text);font-family:'Cairo',sans-serif;cursor:pointer;}
 
 /* ARTICLE CARDS */
-.art-card{background:var(--card);border:1px solid var(--border2);border-radius:20px;padding:20px;
+.art-card{background:var(--card);border:1px solid var(--border2);border-radius:20px;padding:20px;text-decoration:none;color:inherit;display:block;
   margin-bottom:10px;cursor:pointer;transition:all .25s;}
 .art-card:hover{border-color:var(--border);transform:translateX(-3px);}
 .ac-cat{font-size:10px;color:var(--gold);font-weight:700;text-transform:uppercase;margin-bottom:8px;}
@@ -505,7 +505,31 @@ html,body{height:100%;font-family:'Cairo',sans-serif;background:var(--bg);color:
 
   <div class="sec" style="padding-top:24px;">
     <div class="sec-hdr"><h2 class="sec-title">أبرز المقالات</h2><a class="see-all" href="articles/" style="text-decoration:none;">عرض الكل ←</a></div>
-    <div id="art-prev"></div>
+    <div id="art-prev">
+<!-- BUILD:ART-PREV -->
+      <a class="art-card" href="articles/why-two-people-born-same-day-differ/">
+        <div class="ac-cat">🌱 الإنسان والميلاد</div>
+        <div class="ac-title">لماذا يختلف شخصان وُلدا في اليوم نفسه؟</div>
+        <div class="ac-sub">رحلة في أسرار الشخصية والبيئة والاختيارات الإنسانية</div>
+        <div class="ac-foot"><span class="ac-time">⏱ 3 دقائق قراءة</span>
+        <span class="rbtn">اقرأ ←</span></div>
+      </a>
+      <a class="art-card" href="articles/why-we-search-ourselves-in-astrology/">
+        <div class="ac-cat">🧠 علم النفس والميلاد</div>
+        <div class="ac-title">لماذا نبحث عن أنفسنا في الأبراج؟</div>
+        <div class="ac-sub">علم النفس وراء الفضول الإنساني نحو التصنيفات والمعرفة الذاتية</div>
+        <div class="ac-foot"><span class="ac-time">⏱ 3 دقائق قراءة</span>
+        <span class="rbtn">اقرأ ←</span></div>
+      </a>
+      <a class="art-card" href="articles/astronomy-vs-astrology/">
+        <div class="ac-cat">🌌 السماء والثقافة</div>
+        <div class="ac-title">الفرق بين علم الفلك والتنجيم</div>
+        <div class="ac-sub">رحلة في تاريخ نظرة الإنسان إلى السماء من ألف سنة إلى اليوم</div>
+        <div class="ac-foot"><span class="ac-time">⏱ 3 دقائق قراءة</span>
+        <span class="rbtn">اقرأ ←</span></div>
+      </a>
+<!-- /BUILD:ART-PREV -->
+    </div>
   </div>
 
   <div data-ad-slot="leaderboard"></div>
@@ -1446,6 +1470,9 @@ async function loadContent() {
 function renderHomePreview() {
   const el = document.getElementById('art-prev');
   if (!el) return;
+  // البطاقات تُحقن كـHTML ثابت وقت البناء (علامات BUILD:ART-PREV)
+  // فلا تُمسح هنا: مسحها يُفقد الروابط الحقيقية التي يتبعها الزاحف.
+  if (el.querySelector('a.art-card')) return;
   el.innerHTML = '';
   ARTS.slice(0,3).forEach(a => {
     const d = document.createElement('div');

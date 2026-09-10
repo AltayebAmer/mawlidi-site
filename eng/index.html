@@ -150,7 +150,7 @@ html,body{height:100%;font-family:'Lato',sans-serif;background:var(--bg);color:v
 .ad-sub{font-size:11px;color:var(--muted);}
 .ad-btn{flex-shrink:0;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:8px 14px;font-size:11px;color:var(--text);font-family:'Lato',sans-serif;font-weight:700;cursor:pointer;text-transform:uppercase;}
 /* ARTICLES */
-.art-card{background:var(--card);border:1px solid var(--border2);border-radius:20px;padding:20px;margin-bottom:10px;cursor:pointer;transition:all .25s;}
+.art-card{background:var(--card);border:1px solid var(--border2);border-radius:20px;padding:20px;text-decoration:none;color:inherit;display:block;margin-bottom:10px;cursor:pointer;transition:all .25s;}
 .art-card:hover{border-color:var(--border);transform:translateX(3px);}
 .ac-cat{font-size:10px;color:var(--gold);font-weight:700;text-transform:uppercase;margin-bottom:8px;}
 .ac-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--text);line-height:1.5;margin-bottom:6px;}
@@ -393,7 +393,31 @@ html,body{height:100%;font-family:'Lato',sans-serif;background:var(--bg);color:v
 
   <div class="sec" style="padding-top:24px;">
     <div class="sec-hdr"><h2 class="sec-title">Featured Articles</h2><a class="see-all" href="articles/" style="text-decoration:none;">View All →</a></div>
-    <div id="art-prev"></div>
+    <div id="art-prev">
+<!-- BUILD:ART-PREV -->
+      <a class="art-card" href="articles/why-two-people-born-same-day-differ/">
+        <div class="ac-cat">🌱 The Human &amp; Birth</div>
+        <div class="ac-title">Why Do Two People Born on the Same Day Differ So Much?</div>
+        <div class="ac-sub">A deep dive into personality, environment, and the complexity of human nature</div>
+        <div class="ac-foot"><span class="ac-time">⏱ 8 min read</span>
+        <span class="rbtn">Read →</span></div>
+      </a>
+      <a class="art-card" href="articles/why-we-search-ourselves-in-astrology/">
+        <div class="ac-cat">🧠 Psychology &amp; Birth</div>
+        <div class="ac-title">Why Do We Search for Ourselves in Astrology?</div>
+        <div class="ac-sub">The psychology behind humanity's fascination with self-knowledge through classification</div>
+        <div class="ac-foot"><span class="ac-time">⏱ 8 min read</span>
+        <span class="rbtn">Read →</span></div>
+      </a>
+      <a class="art-card" href="articles/astronomy-vs-astrology/">
+        <div class="ac-cat">🌌 Sky &amp; Culture</div>
+        <div class="ac-title">The Difference Between Astronomy and Astrology</div>
+        <div class="ac-sub">A journey through humanity's evolving gaze at the sky, from a thousand years ago to today</div>
+        <div class="ac-foot"><span class="ac-time">⏱ 8 min read</span>
+        <span class="rbtn">Read →</span></div>
+      </a>
+<!-- /BUILD:ART-PREV -->
+    </div>
   </div>
 
   <div data-ad-slot="leaderboard"></div>
@@ -1103,6 +1127,9 @@ async function loadContent() {
 function renderHomePreview() {
   const el = document.getElementById('art-prev');
   if (!el) return;
+  // البطاقات تُحقن كـHTML ثابت وقت البناء (علامات BUILD:ART-PREV)
+  // فلا تُمسح هنا: مسحها يُفقد الروابط الحقيقية التي يتبعها الزاحف.
+  if (el.querySelector('a.art-card')) return;
   el.innerHTML = '';
   ARTS.slice(0,3).forEach(a => {
     const d = document.createElement('div'); d.className = 'art-card';

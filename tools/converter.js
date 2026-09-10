@@ -1,5 +1,6 @@
 /* قالب صفحة محوّل التاريخ الهجري ↔ الميلادي — يُستدعى من tools/build.js */
 const SITE = 'https://mawlidi.com';
+const INTROS = require('./intros.js');
 
 const T = {
   arb: {
@@ -68,6 +69,7 @@ const MONTHS = {
 const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 
 module.exports = function converterPage(lang) {
+  const INTRO = INTROS['converter'][lang];
   const L = T[lang], M = MONTHS[lang];
   const url = `${SITE}/${lang}/converter/`;
   const other = lang === 'arb' ? 'eng' : 'arb';
@@ -140,6 +142,11 @@ module.exports = function converterPage(lang) {
   <p class="tool-link"><a href="../calendar/">${esc(L.cal)} →</a> &nbsp;·&nbsp; <a href="${L.moreHref}">${esc(L.more)} →</a></p>
 
   <div data-ad-slot="leaderboard"></div>
+
+  <section class="anwa intro-block">
+    <h2 class="mini-h">${esc(INTRO[0])}</h2>
+${INTRO[1].map(t=>`    <p>${esc(t)}</p>`).join('\n')}
+  </section>
 
   <section class="faq">
 ${L.faq.map(([q,a]) => `    <details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('\n')}

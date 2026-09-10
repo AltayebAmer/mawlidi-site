@@ -1,5 +1,6 @@
 /* قالب صفحة التقويم الهجري السنوي — يُستدعى من tools/build.js */
 const SITE = 'https://mawlidi.com';
+const INTROS = require('./intros.js');
 
 const T = {
   arb: {
@@ -54,6 +55,7 @@ const MONTHS = {
 const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 
 module.exports = function calendarPage(lang) {
+  const INTRO = INTROS['calendar'][lang];
   const L = T[lang], M = MONTHS[lang];
   const url = `${SITE}/${lang}/calendar/`;
   const other = lang === 'arb' ? 'eng' : 'arb';
@@ -112,6 +114,11 @@ module.exports = function calendarPage(lang) {
 
   <section class="occ" id="occ"></section>
   <div class="months" id="months"></div>
+
+  <section class="anwa intro-block no-print">
+    <h2 class="mini-h">${esc(INTRO[0])}</h2>
+${INTRO[1].map(t=>`    <p>${esc(t)}</p>`).join('\n')}
+  </section>
 
   <p class="note no-print">${esc(L.note)}</p>
   <div class="no-print" data-ad-slot="leaderboard"></div>
