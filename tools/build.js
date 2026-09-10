@@ -25,6 +25,43 @@ const seasonPage    = require('./season.js');
 // السنوات الميلادية التي تُولَّد لها صفحات موسمية — أضف سنة هنا فقط
 const SEASON_YEARS = [2027];
 
+/* ── Cloudflare Web Analytics ──────────────────────────────
+   الطريق الأسهل لا يحتاج هذا الملف إطلاقاً: من لوحة Cloudflare
+   ← Workers & Pages ← mawlidi-site ← Metrics ← Enable،
+   فيُحقن الكود تلقائياً بلا token.
+
+   وهذا المسار البديل لمن أراد الحقن اليدوي: ضع الـtoken هنا
+   وشغّل `node tools/build.js`، فيُضاف إلى كل صفحة مولَّدة.
+   الـtoken معرّف عام يظهر في كود الصفحة، وليس سراً.
+   اتركه فارغاً = لا يُحقن شيء. */
+const CF_ANALYTICS_TOKEN = '';
+
+const BEACON = 'static.cloudflareinsights.com/beacon.min.js';
+
+/* مرور واحد بعد البناء على كل صفحات الموقع: أضمن من إضافة الوسم في
+   خمسة عشر قالباً، ويشمل الصفحتين الرئيسيتين وهما ليستا مولَّدتين. */
+function injectAnalytics() {
+  const tag = `<script defer src="https://${BEACON}" `
+    + `data-cf-beacon='{"token":"${CF_ANALYTICS_TOKEN}"}'></script>\n`;
+  let done = 0;
+  const walk = dir => {
+    for (const e of fs.readdirSync(dir, { withFileTypes:true })) {
+      const f = path.join(dir, e.name);
+      if (e.isDirectory()) { walk(f); continue; }
+      if (e.name !== 'index.html') continue;
+      let h = fs.readFileSync(f, 'utf8');
+      const had = h.includes(BEACON);
+      // انزع القديم دائماً، ثم أضف الجديد إن وُجد token
+      h = h.replace(new RegExp(`<script defer src="https://${BEACON}"[^>]*></script>\\n?`, 'g'), '');
+      if (CF_ANALYTICS_TOKEN) h = h.replace('</body>', tag + '</body>');
+      if (h !== fs.readFileSync(f, 'utf8')) { fs.writeFileSync(f, h); done++; }
+      else if (had && !CF_ANALYTICS_TOKEN) done++;
+    }
+  };
+  for (const d of ['arb','eng']) walk(path.join(ROOT, d));
+  return done;
+}
+
 // معرّف المقالة → slug ثابت (لا يتغيّر أبداً بعد النشر: تغييره يكسر الروابط)
 const SLUGS = {
   a1:'why-two-people-born-same-day-differ',
@@ -353,6 +390,12 @@ ${urls.map(u => `  <url>
 </urlset>
 `;
 if (!CHECK) fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), xml);
+
+if (!CHECK) {
+  const n = injectAnalytics();
+  if (CF_ANALYTICS_TOKEN) console.log(`Cloudflare Analytics: حُقن في ${n} صفحة`);
+  else if (n) console.log(`Cloudflare Analytics: أُزيل من ${n} صفحة (لا token)`);
+}
 
 console.log(`مقالات عربية: ${report.arb} | مقالات إنجليزية: ${report.eng}`);
 console.log(`روابط في sitemap: ${urls.length}`);
