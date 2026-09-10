@@ -110,6 +110,7 @@ module.exports = function countdownPage(lang){
   <div class="cd-list" id="list"></div>
   <p class="note">${esc(L.note)}</p>
   <p class="tool-link">
+    <a href="../ramadan-2027/">${lang==='arb'?'متى رمضان 2027؟':'When is Ramadan 2027?'} →</a><br>
     <a href="${L.h1r}">${esc(L.l1)} →</a> &nbsp;·&nbsp;
     <a href="${L.h2r}">${esc(L.l2)} →</a>
   </p>

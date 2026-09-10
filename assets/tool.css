@@ -138,3 +138,8 @@
 /* قسم الشرح: نص يُقرأ، فيلتزم عرض القراءة حتى داخل حاوية عريضة
    مثل صفحة التقويم (var(--wide)) وإلا بلغ السطر 125 حرفاً */
 .intro-block{max-width:var(--measure);margin-inline:auto;}
+
+/* ═══ صفحات المناسبات الموسمية ═══ */
+.season-hero{text-align:center;margin:8px 0 26px;}
+.season-hero .out-main{font-size:clamp(24px,5vw,34px);margin-bottom:4px;}
+.season-hero .cd-clock{margin-top:18px;}

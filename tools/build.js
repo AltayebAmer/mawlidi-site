@@ -20,6 +20,10 @@ const cardPage      = require('./card.js');
 const mansionsPage  = require('./mansions.js');
 const zodiacPage    = require('./zodiac.js');
 const trustPage     = require('./pages.js');
+const seasonPage    = require('./season.js');
+
+// السنوات الميلادية التي تُولَّد لها صفحات موسمية — أضف سنة هنا فقط
+const SEASON_YEARS = [2027];
 
 // معرّف المقالة → slug ثابت (لا يتغيّر أبداً بعد النشر: تغييره يكسر الروابط)
 const SLUGS = {
@@ -299,6 +303,22 @@ for (const [lang, L] of Object.entries(LANGS)) {
   }
 
   if (!CHECK && injectPreview(lang, L, arts)) written++;
+
+  // صفحات المناسبات الموسمية: «متى رمضان 2027» ونظائرها.
+  // العنوان يطابق عبارة البحث حرفياً، والتواريخ محسوبة لا مكتوبة.
+  for (const gy of SEASON_YEARS) {
+    for (const key of seasonPage.EVENTS) {
+      const page = seasonPage(lang, key, gy);
+      if (!page) continue;
+      urls.push({ loc:`${SITE}/${lang}/${page.slug}/`, pri:'0.9' });
+      if (!CHECK) {
+        const sd = path.join(ROOT, lang, page.slug);
+        fs.mkdirSync(sd, { recursive:true });
+        fs.writeFileSync(path.join(sd, 'index.html'), page.html);
+        written++;
+      }
+    }
+  }
 
   // صفحات الثقة: مستقلة وقابلة للفهرسة، وشرط أساسي لقبول AdSense
   for (const slug of trustPage.SLUGS) {
