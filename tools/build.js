@@ -19,6 +19,7 @@ const moonPage      = require('./moon.js');
 const cardPage      = require('./card.js');
 const mansionsPage  = require('./mansions.js');
 const zodiacPage    = require('./zodiac.js');
+const trustPage     = require('./pages.js');
 
 // معرّف المقالة → slug ثابت (لا يتغيّر أبداً بعد النشر: تغييره يكسر الروابط)
 const SLUGS = {
@@ -119,6 +120,9 @@ function articlePage(art, lang, L, siblings, hasAlt) {
 <link rel="canonical" href="${url}">
 ${alt}<link rel="alternate" hreflang="x-default" href="${SITE}/arb/articles/${slug}/">
 <meta property="og:type" content="article">
+<meta property="og:image" content="${SITE}/assets/og-${lang}.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta property="og:title" content="${esc(art.title)}">
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:url" content="${url}">
@@ -185,6 +189,9 @@ function indexPage(arts, lang, L) {
 <meta property="og:title" content="${L.all} — ${L.site}">
 <meta property="og:url" content="${url}">
 <meta property="og:type" content="website">
+<meta property="og:image" content="${SITE}/assets/og-${lang}.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <script type="application/ld+json">${JSON.stringify(ld)}</script>
 <link href="https://fonts.googleapis.com/css2?${L.fonts}&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../assets/article.css">
@@ -212,6 +219,8 @@ for (const [lang, L] of Object.entries(LANGS)) {
   PRESENT[lang] = new Set(
     extractArts(fs.readFileSync(path.join(ROOT, L.file), 'utf8')).map(a => a.id));
 }
+
+const today = new Date().toISOString().slice(0, 10);
 
 const urls = [
   { loc:`${SITE}/arb/`, pri:'1.0' },
@@ -266,6 +275,17 @@ for (const [lang, L] of Object.entries(LANGS)) {
     written++;
   }
 
+  // صفحات الثقة: مستقلة وقابلة للفهرسة، وشرط أساسي لقبول AdSense
+  for (const slug of trustPage.SLUGS) {
+    urls.push({ loc:`${SITE}/${lang}/${slug}/`, pri:'0.5' });
+    if (!CHECK) {
+      const pd = path.join(ROOT, lang, slug);
+      fs.mkdirSync(pd, { recursive:true });
+      fs.writeFileSync(path.join(pd, 'index.html'), trustPage(lang, slug, today));
+      written++;
+    }
+  }
+
   // أدوات إضافية بنفس النمط
   for (const [slug, tpl] of [['age', agePage], ['countdown', countdownPage], ['moon', moonPage], ['card', cardPage], ['mansions', mansionsPage], ['zodiac', zodiacPage]]) {
     urls.push({ loc:`${SITE}/${lang}/${slug}/`, pri:'0.9' });
@@ -278,7 +298,6 @@ for (const [lang, L] of Object.entries(LANGS)) {
   }
 }
 
-const today = new Date().toISOString().slice(0, 10);
 const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map(u => `  <url>

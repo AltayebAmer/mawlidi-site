@@ -95,6 +95,10 @@ module.exports = function moonPage(lang){
 <meta property="og:description" content="${esc(L.desc)}">
 <meta property="og:url" content="${url}">
 <meta property="og:type" content="website">
+<meta property="og:image" content="${SITE}/assets/og-${lang}.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">${JSON.stringify(ld)}</script>
 <link href="https://fonts.googleapis.com/css2?${L.fonts}&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../assets/article.css">
