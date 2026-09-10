@@ -77,6 +77,25 @@ html,body{height:100%;font-family:'Cairo',sans-serif;background:var(--bg);color:
 
 /* ENGAGE SECTION */
 .sec{padding:20px 20px 0;max-width:540px;margin:0 auto;width:100%;animation:fu .8s ease .3s both;}
+/* ═══ استجابة للشاشات الأوسع ═══
+   العمود كان محبوساً عند 540px على كل مقاس، فيظهر التطبيق شريطاً
+   ضيقاً وسط فراغ واسع على اللوح والمكتب. الحاسبة نفسها تبقى ضيقة
+   لأنها نموذج إدخال، أما الأقسام تحتها فتتّسع وتزيد أعمدتها. */
+@media(min-width:760px){
+  .sec{max-width:660px;padding-inline:28px;}
+  .cc{max-width:560px;}
+  .rb{padding-inline:clamp(18px,4vw,48px);}
+  .rb > *{max-width:660px;margin-inline:auto;}
+}
+@media(min-width:1100px){
+  .sec{max-width:820px;padding-inline:36px;}
+  .rb > *{max-width:820px;}
+}
+@media(min-width:1500px){
+  .sec{max-width:940px;}
+  .rb > *{max-width:940px;}
+}
+
 .sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
 .sec-title{font-family:'Tajawal',sans-serif;font-size:22px;font-weight:700;color:var(--gold-light);}
 .see-all{font-size:12px;color:var(--gold);cursor:pointer;background:none;border:none;font-family:'Cairo',sans-serif;}
@@ -375,6 +394,9 @@ html,body{height:100%;font-family:'Cairo',sans-serif;background:var(--bg);color:
 /* document.addEventListener('contextmenu',e=>e.preventDefault()); */
 /* document.addEventListener('copy',e=>{e.preventDefault();e.clipboardData.setData('text','© مَوْلِدي mawlidi.com');}); */
 
+
+/* بعد قاعدة العمودين المعرَّفة أعلاه، فتغلبها بترتيب المصدر */
+@media(min-width:1100px){ .teaser-cards{grid-template-columns:repeat(3,1fr);} }
 </style>
 <!-- Content source: ./content.json -->
 </head>

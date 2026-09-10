@@ -3,18 +3,28 @@
   --gold:#C9A84C;--gold-light:#E8C97A;--bg:#07071A;--bg2:#0C0C22;
   --card:rgba(255,255,255,0.04);--border:rgba(201,168,76,0.18);--border2:rgba(255,255,255,0.07);
   --text:#F0EDE8;--muted:rgba(240,237,232,0.5);
+
+  /* منظومة قياس مرنة: تتدرّج مع عرض الشاشة بلا قفزات عند نقاط الكسر.
+     --pad  هامش جانبي يتنفّس: 18px على أضيق جوال، 40px على المكتب.
+     --measure عرض سطر القراءة: 68 حرفاً تقريباً، وهو وسط المدى
+     المريح (45–75). قبل هذا كان السطر يبلغ 93 حرفاً على 1440. */
+  --pad: clamp(18px, 4.5vw, 40px);
+  --measure: 68ch;
+  --wide: 1100px;
+  --fs-body: clamp(16px, 0.95rem + 0.22vw, 19px);
+  --fs-h2: clamp(20px, 1.15rem + 0.55vw, 27px);
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--text);line-height:1.9;overflow-x:hidden;
-  padding:0 16px 60px;-webkit-text-size-adjust:100%;}
+  padding:0 var(--pad) 60px;-webkit-text-size-adjust:100%;}
 
-.crumb{max-width:760px;margin:0 auto;padding:20px 0 8px;font-size:13px;color:var(--muted);}
+.crumb{max-width:var(--measure);margin:0 auto;padding:20px 0 8px;font-size:13px;color:var(--muted);}
 .crumb a{color:var(--gold);text-decoration:none;}
 .crumb a:hover{text-decoration:underline;}
 .crumb span{margin:0 6px;opacity:.5;}
 
-.art,.arch-head,.more,.foot{max-width:760px;margin:0 auto;}
+.art,.arch-head,.more,.foot{max-width:var(--measure);margin:0 auto;}
 .cat{display:inline-block;font-size:13px;color:var(--gold);
   background:rgba(201,168,76,0.08);border:1px solid var(--border);
   border-radius:999px;padding:4px 14px;margin-bottom:16px;}
@@ -24,15 +34,15 @@ body{background:var(--bg);color:var(--text);line-height:1.9;overflow-x:hidden;
 .art .meta{font-size:13px;color:var(--muted);padding-bottom:20px;
   border-bottom:1px solid var(--border2);margin-bottom:28px;}
 
-.body p{margin-bottom:20px;font-size:17px;}
-.body h2{font-size:clamp(20px,3.6vw,26px);color:var(--gold);
+.body p{margin-bottom:20px;font-size:var(--fs-body);}
+.body h2{font-size:var(--fs-h2);color:var(--gold);
   margin:36px 0 14px;line-height:1.5;overflow-wrap:break-word;}
 .body h3{font-size:19px;color:var(--gold-light);margin:26px 0 10px;}
 .body ul,.body ol{margin:0 0 20px;padding-inline-start:24px;}
-.body li{margin-bottom:8px;font-size:17px;}
+.body li{margin-bottom:8px;font-size:var(--fs-body);}
 .body blockquote{background:var(--card);border-inline-start:3px solid var(--gold);
-  border-radius:0 14px 14px 0;padding:18px 22px;margin:28px 0;
-  color:var(--gold-light);font-size:17px;}
+  border-radius:0 14px 14px 0;padding:18px clamp(16px,3vw,24px);margin:28px 0;
+  color:var(--gold-light);font-size:var(--fs-body);}
 [dir="ltr"] .body blockquote{border-radius:14px 0 0 14px;}
 .body a{color:var(--gold);}
 .body img{max-width:100%;height:auto;border-radius:14px;}
@@ -42,7 +52,7 @@ body{background:var(--bg);color:var(--text);line-height:1.9;overflow-x:hidden;
 
 .arch-head{padding:14px 0 26px;}
 .arch-head h1{font-size:clamp(28px,6vw,42px);color:var(--gold-light);}
-.grid{max-width:760px;margin:0 auto;display:grid;gap:16px;}
+.grid{max-width:var(--wide);margin:0 auto;display:grid;gap:16px;}
 .card{display:block;background:var(--card);border:1px solid var(--border2);
   border-radius:20px;padding:22px;text-decoration:none;color:var(--text);
   transition:border-color .2s,transform .2s;}
@@ -67,7 +77,8 @@ body{background:var(--bg);color:var(--text);line-height:1.9;overflow-x:hidden;
   color:#07071A;font-weight:700;text-decoration:none;border-radius:999px;
   padding:13px 34px;font-size:16px;}
 
-@media(min-width:640px){ .grid,.more-grid{grid-template-columns:1fr 1fr;} }
+@media(min-width:620px){ .grid,.more-grid{grid-template-columns:1fr 1fr;} }
+@media(min-width:1040px){ .grid{grid-template-columns:repeat(3,1fr);} }
 
 /* دعوة إلى الأداة التي تخدم قارئ المقالة */
 .art-cta{display:block;margin-top:34px;background:linear-gradient(135deg,rgba(201,168,76,0.12),rgba(201,168,76,0.03));

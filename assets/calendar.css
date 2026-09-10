@@ -1,5 +1,5 @@
 /* ═══ MAWLIDI — التقويم الهجري السنوي ═══ */
-.cal{max-width:1000px;margin:0 auto;}
+.cal{max-width:var(--wide);margin:0 auto;}
 .cal h1{font-size:clamp(26px,5.5vw,38px);color:var(--gold-light);margin-bottom:10px;}
 
 .yr-bar{display:flex;align-items:flex-end;gap:10px;margin-bottom:12px;}
@@ -13,7 +13,8 @@
 .yr-span{font-size:14px;color:var(--muted);text-align:center;margin-bottom:26px;}
 
 .occ{background:var(--card);border:1px solid var(--border);border-radius:18px;
-  padding:18px 20px;margin-bottom:28px;}
+  padding:18px clamp(16px,3vw,24px);margin-bottom:28px;max-width:var(--measure);
+  margin-inline:auto;}
 .occ h3{font-size:16px;color:var(--gold);margin-bottom:12px;}
 .occ-row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;
   padding:8px 0;border-bottom:1px solid var(--border2);font-size:14px;flex-wrap:wrap;}
@@ -39,7 +40,8 @@
 .c.now{border-color:var(--gold);background:rgba(201,168,76,0.12);}
 
 @media(min-width:620px){ .months{grid-template-columns:1fr 1fr;} }
-@media(min-width:960px){ .months{grid-template-columns:1fr 1fr 1fr;} }
+@media(min-width:960px){ .months{grid-template-columns:repeat(3,1fr);} }
+@media(min-width:1400px){ .months{grid-template-columns:repeat(4,1fr);} }
 
 @media print{
   .no-print{display:none!important;}
