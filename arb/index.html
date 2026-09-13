@@ -410,6 +410,29 @@ html,body{height:100%;font-family:'Cairo',sans-serif;background:var(--bg);color:
 /* بعد قاعدة العمودين المعرَّفة أعلاه، فتغلبها بترتيب المصدر */
 @media(min-width:1100px){ .teaser-cards{grid-template-columns:repeat(3,1fr);} }
 .season-teaser{border-color:rgba(201,168,76,0.45);background:linear-gradient(135deg,rgba(201,168,76,0.14),rgba(201,168,76,0.03));}
+
+/* ── نموذج التواصل (يُرسل عبر contact.007.gallery) ── */
+#mailPanel{margin-top:12px;background:rgba(255,255,255,0.03);border:1px solid var(--border);
+  border-radius:18px;padding:20px 18px;text-align:start;}
+#mailPanel .fld{margin-bottom:16px;}
+#mailPanel label{display:block;font-size:11px;font-weight:800;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:7px;}
+#mailPanel input,#mailPanel textarea{width:100%;background:transparent;border:none;
+  border-bottom:1px solid var(--border2);color:var(--text);font:inherit;font-size:14px;padding:8px 2px;}
+#mailPanel textarea{min-height:100px;resize:vertical;line-height:1.8;}
+#mailPanel input:focus,#mailPanel textarea:focus{outline:none;border-bottom-color:var(--gold);}
+#mailPanel ::placeholder{color:var(--muted);font-style:italic;}
+#mailPanel .addr{display:block;font-size:12px;color:var(--muted);margin-bottom:14px;}
+.trap{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;
+  overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;}
+#mailSend{width:100%;border:none;cursor:pointer;font:inherit;font-weight:800;padding:14px;
+  border-radius:14px;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#07071A;}
+#mailSend:disabled{opacity:.5;cursor:not-allowed;}
+.mailnote{margin-top:14px;font-size:12.5px;line-height:1.8;padding:11px 13px;border-radius:12px;
+  border:1px solid var(--border2);}
+.mailnote[data-kind=ok]{color:#7fe0b0;border-color:rgba(127,224,176,.4);}
+.mailnote[data-kind=err]{color:#ff9b9b;border-color:rgba(255,155,155,.35);}
+.mailnote[data-kind=wait]{color:var(--muted);}
 </style>
 <!-- Content source: ./content.json -->
 </head>
@@ -802,10 +825,27 @@ html,body{height:100%;font-family:'Cairo',sans-serif;background:var(--bg);color:
     <div class="about-card">
       <div style="font-size:13px;color:var(--gold);font-weight:700;margin-bottom:14px;">📧 تواصل معنا</div>
       <div class="contact-grid">
-        <a href="mailto:artist.altayeb@gmail.com?subject=مَوْلِدي" class="contact-btn">✉️ البريد الإلكتروني</a>
+        <button type="button" class="contact-btn" id="mailCard" aria-expanded="false" aria-controls="mailPanel">✉️ البريد الإلكتروني</button>
         <a href="https://wa.me/?text=مرحباً، أريد التواصل بخصوص مَوْلِدي" class="contact-btn">📱 واتساب</a>
         <button class="contact-btn full" onclick="openOv('adv-ov')">💎 الإعلان في مَوْلِدي</button>
       </div>
+      <section id="mailPanel" hidden>
+        <span class="addr">تصلك ردودنا من hello@mawlidi.com</span>
+        <form id="mailForm" novalidate>
+          <div class="fld"><label for="mailEmail">بريدك الإلكتروني</label>
+            <input id="mailEmail" name="email" type="email" inputmode="email" autocomplete="email"
+                   required maxlength="254" placeholder="your@email.com" dir="ltr"></div>
+          <div class="fld"><label for="mailSubject">الموضوع</label>
+            <input id="mailSubject" name="subject" type="text" required maxlength="200" placeholder="استفسار · بلاغ عن خطأ · إعلان…"></div>
+          <div class="fld"><label for="mailMessage">الرسالة</label>
+            <textarea id="mailMessage" name="message" required maxlength="5000" placeholder="اذكر التاريخ الذي أدخلته والنتيجة التي توقّعتها…"></textarea></div>
+          <div class="trap" aria-hidden="true"><label for="mailTrap">Leave this field empty</label>
+            <input id="mailTrap" name="_trap" type="text" tabindex="-1" autocomplete="off"></div>
+          <button id="mailSend" type="submit">إرسال الرسالة</button>
+          <p class="mailnote" id="mailNote" hidden></p>
+          <p style="margin-top:12px;font-size:11.5px;color:var(--muted);">لا نحتفظ ببريدك ولا نشاركه — نستخدمه للرد عليك وحده.</p>
+        </form>
+      </section>
     </div>
 
     <div class="footer" style="padding-top:16px;">
@@ -1629,8 +1669,14 @@ function sendAdvForm(){
   if(!biz){toast('أدخل اسم النشاط التجاري');return;}
   const subject=encodeURIComponent(`طلب إعلان — الباقة الـ${tier} في مَوْلِدي`);
   const body=encodeURIComponent(`الباقة: ${tier}\nالبريد: ${email}\nالنشاط: ${biz}\nرسالة: ${msg||'—'}\n\n---\nمَوْلِدي · mawlidi.com`);
-  window.location.href=`mailto:artist.altayeb@gmail.com?subject=${subject}&body=${body}`;
-  toast('جاري فتح البريد الإلكتروني ✓');
+  fetch('https://contact.007.gallery/send',{method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({email:email,subject:decodeURIComponent(subject),
+      message:decodeURIComponent(body),_trap:'',elapsed:9000})})
+    .then(r=>r.json()).then(d=>{ if(d&&d.ok){ toast('تم إرسال طلبك ✓ سنردّ على بريدك');
+      ['adv-email','adv-biz','adv-msg'].forEach(i=>{const e=document.getElementById(i);if(e)e.value='';});
+    } else toast('تعذّر الإرسال، أعد المحاولة'); })
+    .catch(()=>toast('تعذّر الإرسال، أعد المحاولة'));
 }
 function contactAdv(tier){openOv('adv-ov');setTimeout(()=>scrollToForm(tier),200);}
 
@@ -1680,5 +1726,6 @@ document.addEventListener('keydown',function(e){
 
 </script>
 <script src="../assets/ads.js"></script>
+<script src="../assets/contact.js" defer></script>
 </body>
 </html>
