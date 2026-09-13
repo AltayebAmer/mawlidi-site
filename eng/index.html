@@ -334,12 +334,13 @@ html,body{height:100%;font-family:'Lato',sans-serif;background:var(--bg);color:v
 .wb-panel{border:1px solid var(--border);background:var(--card);border-radius:16px;padding:20px 16px;max-width:760px;margin-inline:auto}
 .wb-h{font-size:12px;font-weight:800;letter-spacing:.14em;color:var(--gold);text-align:center;margin:0}
 .wb-note{font-size:12.5px;line-height:1.9;color:var(--muted);text-align:center;max-width:48ch;margin:8px auto 14px}
-.wb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:10px}
+.wb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
 .wb-grid a{display:flex;flex-direction:column;gap:3px;align-items:center;text-align:center;padding:14px 12px;
   border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:border-color .2s,background .2s}
 .wb-grid a:hover{border-color:var(--gold);background:rgba(201,168,76,0.07)}
 .wb-grid b{font-size:13.5px;font-weight:700;color:var(--gold-light)}
 .wb-grid span{font-size:11.5px;color:var(--muted)}
+@media(max-width:600px){.wb-grid{grid-template-columns:1fr}}
 @media(max-width:480px){.works-band{margin-top:34px}.wb-panel{padding:16px 13px}}
 </style>
 </head>
@@ -479,9 +480,10 @@ html,body{height:100%;font-family:'Lato',sans-serif;background:var(--bg);color:v
     <h4 class="wb-h">Free projects</h4>
     <p class="wb-note">Each project is built to be free and useful. Share it with someone who would benefit.</p>
     <div class="wb-grid">
+      
+      <a href="https://qurankarem.org" target="_blank" rel="noopener"><b>Quran Kareem</b><span>Digital Quran</span></a>
       <a href="https://007.gallery" target="_blank" rel="noopener"><b>007.gallery</b><span>Image tools</span></a>
       <a href="https://awraqna.com" target="_blank" rel="noopener"><b>Awraqna</b><span>Printable worksheets</span></a>
-      <a href="https://qurankarem.org" target="_blank" rel="noopener"><b>Quran Kareem</b><span>Digital Quran</span></a>
     </div>
   </div>
 </section>
