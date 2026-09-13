@@ -324,6 +324,17 @@ html,body{height:100%;font-family:'Lato',sans-serif;background:var(--bg);color:v
 .mailnote[data-kind=ok]{color:#7fe0b0;border-color:rgba(127,224,176,.4);}
 .mailnote[data-kind=err]{color:#ff9b9b;border-color:rgba(255,155,155,.35);}
 .mailnote[data-kind=wait]{color:var(--muted);}
+
+/* works block */
+.foot-works{max-width:var(--measure);margin:0 auto 20px;display:flex;flex-wrap:wrap;gap:20px;justify-content:center}
+.fw-grp h4{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:9px;text-align:center}
+.fw-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.fw-row a{display:flex;flex-direction:column;gap:2px;align-items:center;min-width:124px;
+  border:1px solid var(--border);border-radius:12px;padding:10px 14px;text-decoration:none;transition:.18s}
+.fw-row a:hover{border-color:var(--gold);background:var(--card)}
+.fw-row b{font-size:13px;font-weight:700;color:var(--gold-light)}
+.fw-row span{font-size:11.5px;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -452,6 +463,22 @@ html,body{height:100%;font-family:'Lato',sans-serif;background:var(--bg);color:v
   <div data-ad-slot="leaderboard"></div>
   <div data-artist-corner></div>
 
+<!-- works:begin -->
+<section class="foot-works">
+  <div class="fw-grp"><h4>Free projects</h4>
+    <div class="fw-row">
+      <a href="https://007.gallery" target="_blank" rel="noopener"><b>007.gallery</b><span>Image tools</span></a>
+      <a href="https://awraqna.com" target="_blank" rel="noopener"><b>Awraqna</b><span>Printable worksheets</span></a>
+      <a href="https://qurankarem.org" target="_blank" rel="noopener"><b>Quran Kareem</b><span>Digital Quran</span></a>
+    </div>
+  </div>
+  <div class="fw-grp"><h4>Art gallery</h4>
+    <div class="fw-row">
+      <a href="https://altayebamer.com" target="_blank" rel="noopener"><b>Artist Altayeb Amer</b><span>Visual art · Dubai</span></a>
+    </div>
+  </div>
+</section>
+<!-- works:end -->
   <div class="footer">
     <div class="footer-brand">Mawlidi 🌙</div>
     <div class="footer-links">
