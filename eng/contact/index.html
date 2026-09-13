@@ -20,6 +20,35 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../assets/article.css">
 <style>body{font-family:'Lato',sans-serif;}</style>
+<style>
+  .contact-open{width:100%;text-align:start;font:inherit;color:inherit;cursor:pointer;
+    background:var(--card);border:1px solid rgba(201,168,76,.3);border-radius:14px;padding:18px 20px;display:block}
+  .contact-open[aria-expanded=true]{border-color:var(--gold)}
+  .contact-open .addr{display:block;color:var(--gold-light);font-weight:700;margin-top:4px}
+  .contact-open .hint{display:block;margin-top:9px;font-size:12.5px;color:var(--muted);font-weight:700}
+  .mailpanel{margin:18px 0 0;background:var(--bg2);border:1px solid rgba(255,255,255,.08);
+    border-radius:18px;padding:26px 22px}
+  .fld{margin-bottom:20px}
+  .fld label{display:block;font-size:11.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--gold);margin-bottom:9px}
+  .fld input,.fld textarea{width:100%;background:transparent;border:none;
+    border-bottom:1px solid rgba(255,255,255,.18);color:#fff;font:inherit;font-size:15.5px;padding:9px 2px}
+  .fld textarea{min-height:120px;resize:vertical;line-height:1.9}
+  .fld input:focus,.fld textarea:focus{outline:none;border-bottom-color:var(--gold)}
+  .fld ::placeholder{color:var(--muted);font-style:italic}
+  .trap{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;
+    overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+  #mailSend{width:100%;border:none;cursor:pointer;font:inherit;font-weight:800;padding:14px;
+    border-radius:12px;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#07071A}
+  #mailSend:disabled{opacity:.5;cursor:not-allowed}
+  .mailnote{margin-top:16px;font-size:13.5px;line-height:1.85;padding:13px 15px;border-radius:12px;
+    border:1px solid rgba(255,255,255,.12)}
+  .mailnote[data-kind=ok]{color:#7fe0b0;border-color:rgba(127,224,176,.4)}
+  .mailnote[data-kind=err]{color:#ff9b9b;border-color:rgba(255,155,155,.35)}
+  .mailnote[data-kind=wait]{color:var(--muted)}
+  .privacy-line{margin-top:14px;font-size:12.5px;color:var(--muted)}
+</style>
+<script src="../../assets/contact.js" defer></script>
 </head>
 <body>
 <nav class="crumb"><a href="../">Home</a> <span>/</span> <span>Contact Us</span></nav>
@@ -28,7 +57,28 @@
   <div class="body">
   <p>We welcome your question and your feedback.</p>
   <h2>Email</h2>
-  <p>For general enquiries or suggestions: artist.altayeb@gmail.com</p>
+  <button type="button" class="contact-open" id="mailCard" aria-expanded="false" aria-controls="mailPanel">
+    Email
+    <span class="addr">hello@007.gallery</span>
+    <span class="hint">Tap to write your message here ▾</span>
+  </button>
+
+  <section class="mailpanel" id="mailPanel" hidden>
+    <form id="mailForm" novalidate>
+      <div class="fld"><label for="mailEmail">Your email</label>
+        <input id="mailEmail" name="email" type="email" inputmode="email" autocomplete="email"
+               required maxlength="254" placeholder="your@email.com" dir="ltr"></div>
+      <div class="fld"><label for="mailSubject">Subject</label>
+        <input id="mailSubject" name="subject" type="text" required maxlength="200" placeholder="Enquiry · Error report · Advertising…"></div>
+      <div class="fld"><label for="mailMessage">Message</label>
+        <textarea id="mailMessage" name="message" required maxlength="5000" placeholder="Tell us the date you entered and the result you expected…"></textarea></div>
+      <div class="trap" aria-hidden="true"><label for="mailTrap">Leave this field empty</label>
+        <input id="mailTrap" name="_trap" type="text" tabindex="-1" autocomplete="off"></div>
+      <button id="mailSend" type="submit">Send message</button>
+      <p class="mailnote" id="mailNote" hidden></p>
+      <p class="privacy-line">We do not store or share your email — it is used only to reply to you.</p>
+    </form>
+  </section>
   <h2>Reporting a calculation error</h2>
   <p>If you find a date or calculation you believe is wrong, send us: the date you entered, the result shown, the result you expected, and the name of the tool. These details shorten the path to a fix considerably.</p>
   <h2>Advertising</h2>
@@ -39,7 +89,14 @@
   </div>
 </article>
 <div data-artist-corner></div>
-<footer class="foot"><a class="btn" href="../">Back to Mawlidi</a></footer>
+<footer class="foot">
+<!-- support:begin -->
+<section class="foot-support">
+  <h3>❤ Support us — pay it forward</h3>
+  <p>Mawlidi is completely free and its calculations run inside your browser. Viewing a simple ad, or sharing the site with a friend, helps us keep everything free.</p>
+</section>
+<!-- support:end -->
+<a class="btn" href="../">Back to Mawlidi</a></footer>
 <script src="../../assets/ads.js"></script>
 </body>
 </html>

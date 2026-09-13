@@ -86,3 +86,10 @@ body{background:var(--bg);color:var(--text);line-height:1.9;overflow-x:hidden;
   color:var(--gold-light);text-decoration:none;font-size:16px;line-height:1.6;
   text-align:center;transition:border-color .2s;overflow-wrap:break-word;}
 .art-cta:hover{border-color:var(--gold);}
+
+
+/* ---------- رد المعروف ---------- */
+.foot-support{max-width:var(--measure);margin:0 auto 22px;text-align:center;
+  background:var(--card);border:1px solid rgba(201,168,76,.28);border-radius:16px;padding:18px 20px}
+.foot-support h3{font-size:15px;font-weight:800;color:var(--gold-light);margin-bottom:8px}
+.foot-support p{color:var(--muted);font-size:13.5px;line-height:1.9;margin:0}
