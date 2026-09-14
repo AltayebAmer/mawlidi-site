@@ -42,6 +42,7 @@ const WIDTHS = [360, 390, 768, 1024, 1440, 1920];
 const frame = document.getElementById('frame');
 const out = document.getElementById('out');
 const btn = document.getElementById('run');
+let lastCulprit = '';
 
 function load(url){
   return new Promise(res => {
@@ -58,8 +59,22 @@ async function measure(url){
     await load(url + (url.includes('?') ? '&' : '?') + '_w=' + w);
     let over = null;
     try{
-      const d = frame.contentDocument.documentElement;
-      over = d.scrollWidth - d.clientWidth;
+      const doc = frame.contentDocument;
+      const d = doc.documentElement;
+      // الحكم: هل يصل الفيضان إلى الصفحة؟ documentElement وحده يكذب حين يكون
+      // overflow-x مقصوصاً، لكن body يحتفظ بـscrollWidth الحقيقي — فنأخذ الأكبر.
+      over = Math.max(d.scrollWidth - d.clientWidth, doc.body ? doc.body.scrollWidth - doc.body.clientWidth : 0);
+      if (over > 0){
+        // التشخيص فقط: أي عنصر غير محتوى هو الأعرض؟
+        let worst = 0, name = '';
+        for (const el of doc.querySelectorAll('body *')){
+          if (!el.clientWidth) continue;
+          if (doc.defaultView.getComputedStyle(el).overflowX !== 'visible') continue;
+          const d2 = el.scrollWidth - el.clientWidth;
+          if (d2 > worst){ worst = d2; name = el.tagName.toLowerCase()+(el.className?'.'+String(el.className).trim().split(/\s+/)[0]:''); }
+        }
+        lastCulprit = name || 'body';
+      }
     }catch(e){ over = 'منع'; }
     row.push(over);
   }
@@ -73,10 +88,11 @@ btn.onclick = async () => {
   let fails = 0;
   for (const u of urls){
     const r = await measure(u);
+    lastCulprit = '';
     const tds = r.map(v => (typeof v === 'number' && v > 0)
       ? (fails++, '<td class="bad">+'+v+'</td>')
       : '<td class="ok">'+(v==='منع'?'؟':'✓')+'</td>').join('');
-    out.insertAdjacentHTML('beforeend', '<tr><td class="page">'+u+'</td>'+tds+'</tr>');
+    out.insertAdjacentHTML('beforeend', '<tr><td class="page">'+u+(lastCulprit?' <small>('+lastCulprit+')</small>':'')+'</td>'+tds+'</tr>');
   }
   document.getElementById('sum').innerHTML = fails
     ? '<span class="bad">✗ '+fails+' حالة فيضان</span>'

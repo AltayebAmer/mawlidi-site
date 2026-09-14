@@ -46,7 +46,11 @@ html,body{height:100%;font-family:'Cairo',sans-serif;background:var(--bg);color:
 .ls a.on{background:var(--gold);color:#07071A;box-shadow:0 2px 12px rgba(201,168,76,0.5);}
 
 .page{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;}
-.hero{padding:max(90px,calc(env(safe-area-inset-top,20px)+70px)) 24px 36px;text-align:center;position:relative;}
+.hero{padding:max(90px,calc(env(safe-area-inset-top,20px)+70px)) 24px 36px;text-align:center;position:relative;
+  /* الهالة دائرة 600px والقمر يبثّ توهّجاً خارج حدّه — كلاهما زخرفة مطلقة
+     تُسهم في عرض التمرير. clip على المحور الأفقي وحده يمنع ذلك بلا قصّ رأسي،
+     وبلا أي فرق بصري لأن الجسم يقصّ عند الحدّ نفسه أصلاً. */
+  overflow-x:clip;}
 .hero-glow{position:absolute;width:600px;height:600px;border-radius:50%;
   background:radial-gradient(ellipse,rgba(201,168,76,0.07) 0%,transparent 70%);
   top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
