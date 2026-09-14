@@ -1,0 +1,127 @@
+/* ════════════════════════════════════════════════════════════
+   responsive.css — المعيار المتجاوب الموحّد لشبكة المواقع الخمسة
+   المصدر الوحيد: ~/Claude Workspace/shared/responsive.css
+   يُنسخ حرفياً إلى assets/ في كل موقع — لا تُعدَّل النسخ، عدّل المصدر وانسخ.
+   المرجع: RESPONSIVE_STANDARD.md
+   © 2026 الفنان الطيب عامر
+
+   قواعده: min-width فقط، ثلاث طبقات (base / 600 / 1024)،
+   مقاييس سائلة بـclamp، وسقف عرض لسطر النص.
+   لا ألوان ولا خطوط هنا — الهوية تبقى في ملف كل موقع.
+   ════════════════════════════════════════════════════════════ */
+
+:root{
+  /* ── المسافات ── */
+  --s0: 4px;
+  --s1: clamp(8px,  1.2vw, 10px);
+  --s2: clamp(12px, 2vw,   16px);
+  --s3: clamp(16px, 3vw,   24px);
+  --s4: clamp(22px, 4.5vw, 40px);
+  --s5: clamp(32px, 6vw,   64px);
+
+  /* ── الخطوط ── */
+  --fs-sm:   clamp(13px, 0.78rem + 0.10vw, 15px);
+  --fs-body: clamp(16px, 0.95rem + 0.22vw, 19px);
+  --fs-h3:   clamp(18px, 1.05rem + 0.35vw, 22px);
+  --fs-h2:   clamp(20px, 1.15rem + 0.55vw, 27px);
+  --fs-h1:   clamp(26px, 1.40rem + 1.30vw, 44px);
+
+  /* ── سقوف العرض ── */
+  --w-read: 68ch;
+  --w-app:  1100px;
+  --w-wide: 1400px;
+
+  /* ── مساحة اللمس الدنيا (WCAG 2.5.5) ── */
+  --touch: 44px;
+}
+
+/* ── أساسات ──
+   الصندوقية الموروثة تمنع تفاجؤ الحشوة بزيادة العرض،
+   وmin-width:0 على عناصر الشبكة هو ما يمنع فيضان grid فعلياً
+   (العنصر الافتراضي auto لا ينكمش دون محتواه). */
+*,*::before,*::after{ box-sizing:border-box }
+html{ -webkit-text-size-adjust:100% }
+body{ margin:0; overflow-x:clip }
+img,video,canvas,svg,iframe{ max-width:100%; height:auto }
+:where(pre,table,code){ max-width:100% }
+:where(.grid,.cards,.list)>*{ min-width:0 }
+
+/* الجداول والكود لا تنكمش — تُمرَّر داخل نفسها لا تُفيض الصفحة */
+.u-scroll-x{ overflow-x:auto; -webkit-overflow-scrolling:touch }
+
+/* ── الحاويات ── */
+.u-read,.u-app,.u-wide{ margin-inline:auto; padding-inline:var(--s4); width:100% }
+.u-read{ max-width:var(--w-read) }
+.u-app { max-width:var(--w-app)  }
+.u-wide{ max-width:var(--w-wide) }
+
+/* نص القراءة: هذا السطر وحده يمنع أسطراً بعرض 1400px على الشاشات الكبيرة */
+.u-prose{ max-width:var(--w-read); margin-inline:auto; font-size:var(--fs-body); line-height:1.75 }
+
+/* ── مساحات اللمس ── */
+.u-tap{ min-width:var(--touch); min-height:var(--touch);
+        display:inline-flex; align-items:center; justify-content:center }
+
+/* ════ التنقّل — الشريط السفلي (٥ عناصر أو أقل متساوية) ════ */
+.rnav-bottom{
+  position:fixed; inset-inline:0; bottom:0; z-index:60;
+  display:flex; justify-content:space-around;
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+.rnav-bottom>a{
+  flex:1; min-height:var(--touch);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:2px; font-size:var(--fs-sm); text-decoration:none;
+}
+body:has(.rnav-bottom){ padding-bottom:calc(var(--touch) + 34px + env(safe-area-inset-bottom,0px)) }
+
+@media (min-width:600px){
+  /* فوق الموبايل: الشريط يصعد ويصير أفقياً مكشوفاً */
+  .rnav-bottom{ position:static; justify-content:center; gap:var(--s3); padding-bottom:0 }
+  .rnav-bottom>a{ flex:0 0 auto; flex-direction:row; gap:var(--s1); font-size:var(--fs-body) }
+  body:has(.rnav-bottom){ padding-bottom:0 }
+}
+
+/* ════ التنقّل — البرغر (أكثر من ٥، أو فيها تسلسل هرمي) ════
+   بلا JavaScript: checkbox مخفي يقود اللوحة.
+   الاتجاه بالخصائص المنطقية فيعمل في AR وEN بلا قاعدة ثانية. */
+.rnav-toggle{ position:absolute; opacity:0; pointer-events:none }
+.rnav-burger{
+  min-width:var(--touch); min-height:var(--touch);
+  display:inline-flex; align-items:center; justify-content:center;
+  cursor:pointer; border:0; background:none; font-size:22px; line-height:1;
+}
+.rnav-panel{
+  position:fixed; inset-block:0; inset-inline-start:0; z-index:70;
+  width:min(82vw,320px); max-width:100%;
+  transform:translateX(-100%);
+  transition:transform .22s ease;
+  overflow-y:auto; overscroll-behavior:contain;
+  padding:var(--s4) var(--s3);
+  display:flex; flex-direction:column; gap:var(--s2);
+}
+[dir="rtl"] .rnav-panel{ transform:translateX(100%) }
+.rnav-panel a{ min-height:var(--touch); display:flex; align-items:center; text-decoration:none }
+.rnav-scrim{
+  position:fixed; inset:0; z-index:65; opacity:0; visibility:hidden;
+  transition:opacity .22s ease, visibility .22s;
+  background:rgba(0,0,0,.55); border:0; width:100%; cursor:pointer;
+}
+.rnav-toggle:checked ~ .rnav-panel{ transform:none }
+.rnav-toggle:checked ~ .rnav-scrim{ opacity:1; visibility:visible }
+/* إبراز التركيز على الزر عند التنقّل بلوحة المفاتيح */
+.rnav-toggle:focus-visible ~ .rnav-burger{ outline:2px solid currentColor; outline-offset:3px }
+
+@media (min-width:600px){
+  /* تابلت فما فوق: اللوحة تتحوّل إلى شريط أفقي مكشوف، والبرغر يختفي */
+  .rnav-burger,.rnav-scrim{ display:none }
+  .rnav-panel{
+    position:static; transform:none; width:auto; padding:0;
+    flex-direction:row; align-items:center; gap:var(--s3);
+    overflow:visible; background:none;
+  }
+}
+
+@media (prefers-reduced-motion:reduce){
+  .rnav-panel,.rnav-scrim{ transition:none }
+}

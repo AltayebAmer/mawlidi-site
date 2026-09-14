@@ -1,3 +1,4 @@
+@import url('responsive.css');  /* المعيار المتجاوب الموحّد — المصدر: shared/responsive.css */
 /* ═══ MAWLIDI — أنماط صفحات المقالات المستقلة ═══ */
 :root{
   --gold:#C9A84C;--gold-light:#E8C97A;--bg:#07071A;--bg2:#0C0C22;
@@ -77,8 +78,8 @@ body{background:var(--bg);color:var(--text);line-height:1.9;overflow-x:hidden;
   color:#07071A;font-weight:700;text-decoration:none;border-radius:999px;
   padding:13px 34px;font-size:16px;}
 
-@media(min-width:620px){ .grid,.more-grid{grid-template-columns:1fr 1fr;} }
-@media(min-width:1040px){ .grid{grid-template-columns:repeat(3,1fr);} }
+@media(min-width:600px){ .grid,.more-grid{grid-template-columns:1fr 1fr;} }
+@media(min-width:1024px){ .grid{grid-template-columns:repeat(3,1fr);} }
 
 /* دعوة إلى الأداة التي تخدم قارئ المقالة */
 .art-cta{display:block;margin-top:34px;background:linear-gradient(135deg,rgba(201,168,76,0.12),rgba(201,168,76,0.03));
@@ -98,21 +99,21 @@ body{background:var(--bg);color:var(--text);line-height:1.9;overflow-x:hidden;
 /* ---------- مشاريع أخرى ---------- */
 
 /* شريط المشاريع — فوق الفووتر لا داخله */
-.works-band{max-width:var(--wide,1100px);margin:46px auto 0;padding:0 18px}
+.works-band{max-width:var(--wide,1100px);margin:clamp(34px,5vw,46px) auto 0;padding-inline:var(--s3,18px)}
 .wb-head{text-align:center;margin-bottom:18px}
 .wb-eyebrow{font-size:11px;letter-spacing:.2em;color:var(--muted)}
 .wb-title{font-size:clamp(18px,3.2vw,24px);font-weight:800;color:var(--gold-light);margin-top:6px}
-.wb-panel{border:1px solid var(--border);background:var(--card);border-radius:16px;padding:20px 16px;max-width:760px;margin-inline:auto}
+.wb-panel{border:1px solid var(--border);background:var(--card);border-radius:16px;padding:clamp(16px,3vw,20px) clamp(13px,2.5vw,16px);max-width:760px;margin-inline:auto}
 .wb-h{font-size:12px;font-weight:800;letter-spacing:.14em;color:var(--gold);text-align:center;margin:0}
 .wb-note{font-size:12.5px;line-height:1.9;color:var(--muted);text-align:center;max-width:48ch;margin:8px auto 14px}
-.wb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+.wb-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:10px}
 .wb-grid a{display:flex;flex-direction:column;gap:3px;align-items:center;text-align:center;padding:14px 12px;
   border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:border-color .2s,background .2s}
 .wb-grid a:hover{border-color:var(--gold);background:rgba(201,168,76,0.07)}
 .wb-grid b{font-size:13.5px;font-weight:700;color:var(--gold-light)}
 .wb-grid span{font-size:11.5px;color:var(--muted)}
-@media(max-width:600px){.wb-grid{grid-template-columns:1fr}}
-@media(max-width:480px){.works-band{margin-top:34px}.wb-panel{padding:16px 13px}}
+@media (min-width:600px){.wb-grid{grid-template-columns:repeat(3,1fr)}}
+/* مسافات شريط الأعمال صارت سائلة */
 
 /* ═══ الشريط السفلي — تنقّل أساسي في كل صفحة ═══
    كان موجوداً في الصفحتين الرئيسيتين فقط، فيفقده الزائر بمجرّد فتح
@@ -121,8 +122,8 @@ body{background:var(--bg);color:var(--text);line-height:1.9;overflow-x:hidden;
   background:rgba(7,7,26,0.96);backdrop-filter:blur(20px);
   border-top:1px solid var(--border2);
   padding-bottom:env(safe-area-inset-bottom,0px);}
-.bnav a{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;
-  padding:9px 6px;text-decoration:none;color:var(--muted);min-width:0;
+.bnav a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  min-height:var(--touch);padding:9px 6px;text-decoration:none;color:var(--muted);min-width:0;
   transition:color .2s;}
 .bnav a:hover{color:var(--gold-light);}
 .bnav a.on{color:var(--gold);}

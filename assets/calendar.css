@@ -39,9 +39,9 @@
 .c.fri b{color:var(--gold);}
 .c.now{border-color:var(--gold);background:rgba(201,168,76,0.12);}
 
-@media(min-width:620px){ .months{grid-template-columns:1fr 1fr;} }
-@media(min-width:960px){ .months{grid-template-columns:repeat(3,1fr);} }
-@media(min-width:1400px){ .months{grid-template-columns:repeat(4,1fr);} }
+@media(min-width:600px){ .months{grid-template-columns:1fr 1fr;} }
+@media(min-width:1024px){ .months{grid-template-columns:repeat(3,1fr);} }
+@media(min-width:1440px){ .months{grid-template-columns:repeat(4,1fr);} }
 
 @media print{
   .no-print{display:none!important;}

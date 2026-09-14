@@ -1,0 +1,87 @@
+<!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>مِقياس الفيضان الأفقي</title>
+<!--
+  يُوضع في جذر الموقع ويُشغَّل عبر:  python3 -m http.server 8123
+  ثم يُفتح:  http://localhost:8123/overflow-harness.html
+  يجب أن يكون من نفس الأصل ليقرأ داخل الـiframe (file:// لا يعمل).
+  المرجع: RESPONSIVE_STANDARD.md — البند ٧
+-->
+<style>
+*,*::before,*::after{box-sizing:border-box}
+body{font:15px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;margin:0;padding:24px;background:#111;color:#eee}
+h1{font-size:20px;margin:0 0 4px}
+p.sub{margin:0 0 18px;color:#999;font-size:13px}
+textarea{width:100%;height:90px;background:#1b1b1b;color:#eee;border:1px solid #333;border-radius:6px;padding:10px;font:13px/1.5 ui-monospace,monospace}
+button{margin:12px 0;padding:10px 20px;font-size:15px;border:0;border-radius:6px;background:#2d7;color:#062;font-weight:700;cursor:pointer}
+button[disabled]{opacity:.5;cursor:default}
+table{border-collapse:collapse;width:100%;margin-top:14px;font-size:13px}
+th,td{border:1px solid #333;padding:6px 9px;text-align:center}
+th{background:#1b1b1b;position:sticky;top:0}
+td.page{text-align:start;white-space:nowrap}
+.ok{color:#5d5;font-weight:700}
+.bad{color:#f66;font-weight:700;background:#2a1111}
+#frame{position:fixed;inset-inline-end:-9999px;top:0;border:0}
+#sum{margin-top:14px;font-size:15px;font-weight:700}
+</style>
+<h1>مِقياس الفيضان الأفقي</h1>
+<p class="sub">يفحص <code>scrollWidth &gt; clientWidth</code> لكل صفحة عند العروض الستة. الرقم في الخانة الحمراء هو مقدار الفيضان بالبكسل.</p>
+<textarea id="urls">/
+/projects.html
+/contact.html
+/articles/
+/services/qr.html
+/en/
+/en/projects.html</textarea>
+<button id="run">ابدأ الفحص</button>
+<table id="out"></table>
+<div id="sum"></div>
+<iframe id="frame"></iframe>
+<script>
+const WIDTHS = [360, 390, 768, 1024, 1440, 1920];
+const frame = document.getElementById('frame');
+const out = document.getElementById('out');
+const btn = document.getElementById('run');
+
+function load(url){
+  return new Promise(res => {
+    frame.onload = () => setTimeout(() => res(), 350); // مهلة لتثبيت التخطيط
+    frame.src = url;
+  });
+}
+
+async function measure(url){
+  const row = [];
+  for (const w of WIDTHS){
+    frame.style.width = w + 'px';
+    frame.style.height = Math.round(w * 1.6) + 'px';
+    await load(url + (url.includes('?') ? '&' : '?') + '_w=' + w);
+    let over = null;
+    try{
+      const d = frame.contentDocument.documentElement;
+      over = d.scrollWidth - d.clientWidth;
+    }catch(e){ over = 'منع'; }
+    row.push(over);
+  }
+  return row;
+}
+
+btn.onclick = async () => {
+  btn.disabled = true; btn.textContent = 'يفحص…';
+  const urls = document.getElementById('urls').value.split('\n').map(s=>s.trim()).filter(Boolean);
+  out.innerHTML = '<tr><th>الصفحة</th>' + WIDTHS.map(w=>'<th>'+w+'</th>').join('') + '</tr>';
+  let fails = 0;
+  for (const u of urls){
+    const r = await measure(u);
+    const tds = r.map(v => (typeof v === 'number' && v > 0)
+      ? (fails++, '<td class="bad">+'+v+'</td>')
+      : '<td class="ok">'+(v==='منع'?'؟':'✓')+'</td>').join('');
+    out.insertAdjacentHTML('beforeend', '<tr><td class="page">'+u+'</td>'+tds+'</tr>');
+  }
+  document.getElementById('sum').innerHTML = fails
+    ? '<span class="bad">✗ '+fails+' حالة فيضان</span>'
+    : '<span class="ok">✓ صفر فيضان في كل العروض</span>';
+  btn.disabled = false; btn.textContent = 'أعد الفحص';
+};
+</script>
+</html>
