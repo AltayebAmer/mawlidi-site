@@ -370,21 +370,11 @@ html,body{height:100%;font-family:'Lato',sans-serif;background:var(--bg);color:v
 
   <div class="sec" style="padding-top:22px;">
     <div class="teaser-cards">
-      <div class="teaser" onclick="openOv('obs-ov')">
+      <a class="teaser" href="observatory/">
         <div class="teaser-icon">🔭</div>
         <div class="teaser-body"><div class="teaser-title">Birth Observatory</div><div class="teaser-desc">12 knowledge categories in psychology, history & cosmos</div></div>
         <div class="teaser-arrow">→</div>
-  </div>
-
-  <div class="sec" style="padding-top:28px;">
-    <h2 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:800;color:var(--gold-light);text-align:center;margin-bottom:8px;">Discover More Than a Date</h2>
-    <p style="font-size:13px;color:var(--muted);text-align:center;line-height:1.7;margin-bottom:18px;">Mawlidi is more than a calculator — it's a journey through time, civilization, and identity.</p>
-    <div class="stat-row">
-      <div class="stat-box"><div class="stat-num">12</div><div class="stat-lbl">Categories</div></div>
-      <div class="stat-box"><div class="stat-num">15+</div><div class="stat-lbl">Articles</div></div>
-      <div class="stat-box"><div class="stat-num" id="hyNow">—</div><div class="stat-lbl">Hijri Year</div></div>
-    </div>
-      </div>
+      </a>
       <a class="teaser season-teaser" href="ramadan-2027/">
         <div class="teaser-icon">🌙</div>
         <div class="teaser-body"><div class="teaser-title">When is Ramadan 2027?</div><div class="teaser-desc">The Hijri and Gregorian dates with a live countdown</div></div>
@@ -435,6 +425,15 @@ html,body{height:100%;font-family:'Lato',sans-serif;background:var(--bg);color:v
         <div class="teaser-body"><div class="teaser-title">Deep Articles</div><div class="teaser-desc">Why we differ, the beauty of the lunar calendar and more</div></div>
         <div class="teaser-arrow">→</div>
       </a>
+    </div>
+  </div>
+  <div class="sec" style="padding-top:28px;">
+    <h2 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:800;color:var(--gold-light);text-align:center;margin-bottom:8px;">Discover More Than a Date</h2>
+    <p style="font-size:13px;color:var(--muted);text-align:center;line-height:1.7;margin-bottom:18px;">Mawlidi is more than a calculator — it's a journey through time, civilization, and identity.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">12</div><div class="stat-lbl">Categories</div></div>
+      <div class="stat-box"><div class="stat-num">15+</div><div class="stat-lbl">Articles</div></div>
+      <div class="stat-box"><div class="stat-num" id="hyNow">—</div><div class="stat-lbl">Hijri Year</div></div>
     </div>
   </div>
 
@@ -491,9 +490,9 @@ html,body{height:100%;font-family:'Lato',sans-serif;background:var(--bg);color:v
   <div class="footer">
     <div class="footer-brand">Mawlidi 🌙</div>
     <div class="footer-links">
-      <span class="footer-link" onclick="openOv('about-ov')">About</span>
-      <span class="footer-link" onclick="openOv('obs-ov')">Observatory</span>
-      <span class="footer-link" onclick="openOv('arts-ov')">Articles</span>
+      <a class="footer-link" href="about/" style="text-decoration:none;">About</a>
+      <a class="footer-link" href="observatory/" style="text-decoration:none;">Observatory</a>
+      <a class="footer-link" href="articles/" style="text-decoration:none;">Articles</a>
       <a class="footer-link" href="articles/" style="text-decoration:none;">Article Archive</a>
       <a class="footer-link" href="converter/" style="text-decoration:none;">Date Converter</a>
       <a class="footer-link" href="calendar/" style="text-decoration:none;">Hijri Calendar</a>
@@ -510,7 +509,7 @@ html,body{height:100%;font-family:'Lato',sans-serif;background:var(--bg);color:v
       <a class="footer-link" href="ramadan-2027/" style="text-decoration:none;">Ramadan 2027</a>
       <a class="footer-link" href="eid-alfitr-2027/" style="text-decoration:none;">Eid al-Fitr 2027</a>
       <a class="footer-link" href="eid-aladha-2027/" style="text-decoration:none;">Eid al-Adha 2027</a>
-      <span class="footer-link" onclick="openOv('adv-ov')">Advertise</span>
+      <a class="footer-link" href="advertise/" style="text-decoration:none;">Advertise</a>
     </div>
     Altayeb Amer · Artist Altayeb · All rights reserved © 2025 · mawlidi.com
   </div>
@@ -525,38 +524,7 @@ html,body{height:100%;font-family:'Lato',sans-serif;background:var(--bg);color:v
   <div class="rb" id="rb"></div>
 </div>
 
-<div class="ov" id="obs-ov">
-  <div class="ov-hdr">
-    <div style="width:54px"></div>
-    <span class="ov-title">🔭 Birth Observatory</span>
-    <button class="bb" onclick="closeOv('obs-ov')">Back →</button>
-  </div>
-  <div class="ov-body">
-    <div class="obs-notice"><strong>✦ Observatory Charter</strong><br>A cultural and educational space — no predictions, no claims of knowing the unseen which only God knows.</div>
-    <div class="obs-cats" id="obs-cats"></div>
-    <div class="obs-excl-wrap">
-      <div class="obs-excl-hdr">✦ Observatory Exclusive Articles</div>
-      <div id="obs-arts-list"></div>
-    </div>
-    <div class="footer" style="padding-top:20px;"><div class="footer-brand">Mawlidi 🌙</div>Altayeb Amer · mawlidi.com</div>
-  </div>
-</div>
 
-<div class="ov" id="arts-ov">
-  <div class="ov-hdr">
-    <div style="width:54px"></div>
-    <span class="ov-title">📖 Articles</span>
-    <button class="bb" onclick="closeOv('arts-ov')">Back →</button>
-  </div>
-  <div class="ov-body">
-    <div style="background:rgba(201,168,76,0.06);border:1px solid var(--border);border-radius:14px;padding:12px 16px;margin-bottom:18px;font-size:11px;color:rgba(201,168,76,0.8);line-height:1.7;text-align:center;">
-      ✦ All articles are for cultural reflection — no predictions, no claims of knowing the unseen
-    </div>
-    <div class="chips" id="art-chips"></div>
-    <div id="arts-list"></div>
-    <div class="footer" style="padding-top:20px;"><div class="footer-brand">Mawlidi 🌙</div>Altayeb Amer · mawlidi.com</div>
-  </div>
-</div>
 
 <div id="rdr">
   <div class="rdr-hdr">
@@ -567,110 +535,14 @@ html,body{height:100%;font-family:'Lato',sans-serif;background:var(--bg);color:v
   <div class="rdr-body" id="rdr-body"></div>
 </div>
 
-<div class="ov" id="adv-ov">
-  <div class="ov-hdr">
-    <div style="width:54px"></div>
-    <span class="ov-title">💎 Advertise</span>
-    <button class="bb" onclick="closeOv('adv-ov')">Back →</button>
-  </div>
-  <div class="ov-body">
-    <div class="adv-hero">
-      <div class="adv-hero-title">💎 Advertise on Mawlidi</div>
-      <div class="adv-hero-sub">Direct reach to an audience actively searching for Hijri birthdays from Saudi Arabia, UAE and the Arab Gulf</div>
-      <div class="adv-audience">🎯 Mawlidi's Audience: Cake shops · Gift stores · Photography · Event planning · Flowers · Printing</div>
-    </div>
-    <div class="tier-card tier-plat"><div class="tier-badge">PLATINUM ✦</div><div class="tier-name">Platinum Package</div><div class="tier-price"><span class="aed">AED</span>2,000</div><div class="tier-period">per month</div><ul class="tier-feats"><li>Top placement — first card after results</li><li>Large size with image, text & CTA button</li><li>Appears in article pages</li><li>Monthly report with clicks & impressions</li></ul><button class="tier-btn" onclick="scrollToForm('Platinum')">Book Now</button></div>
-    <div class="tier-card tier-gold"><div class="tier-badge">GOLD ★</div><div class="tier-name">Gold Package</div><div class="tier-price"><span class="aed">AED</span>1,000</div><div class="tier-period">per month</div><ul class="tier-feats"><li>Appears after results statistics</li><li>Medium size with image, text & button</li><li>Appears in articles page</li></ul><button class="tier-btn" onclick="scrollToForm('Gold')">Book Now</button></div>
-    <div class="tier-card tier-silver"><div class="tier-badge">SILVER</div><div class="tier-name">Silver Package</div><div class="tier-price"><span class="aed">AED</span>500</div><div class="tier-period">per month</div><ul class="tier-feats"><li>Two cards inside results table</li><li>Small size with icon and text</li></ul><button class="tier-btn" onclick="scrollToForm('Silver')">Book Now</button></div>
-    <div class="tier-card tier-bronze"><div class="tier-badge">BRONZE</div><div class="tier-name">Bronze Package</div><div class="tier-price"><span class="aed">AED</span>200</div><div class="tier-period">per month</div><ul class="tier-feats"><li>Card at the bottom of results</li><li>Text and button only</li></ul><button class="tier-btn" onclick="scrollToForm('Bronze')">Book Now</button></div>
-    <div class="adv-form-wrap" id="adv-form-wrap">
-      <div class="adv-form-title">📋 Booking Form</div>
-      <div class="adv-form-sub">Fill in your details and we'll contact you within 24 hours to confirm and send your secure PayPal payment link.</div>
-      <div class="ff"><label>Package</label><select id="adv-tier"><option value="Platinum">💠 Platinum — AED 2,000 / month</option><option value="Gold">⭐ Gold — AED 1,000 / month</option><option value="Silver">🥈 Silver — AED 500 / month</option><option value="Bronze">🥉 Bronze — AED 200 / month</option></select></div>
-      <div class="ff"><label>Email</label><input type="email" id="adv-email" placeholder="your@email.com"></div>
-      <div class="ff"><label>Business Name</label><input type="text" id="adv-biz" placeholder="Your store or business name"></div>
-      <div class="ff"><label>Message (Optional)</label><textarea id="adv-msg" placeholder="Additional details or questions..."></textarea></div>
-      <div class="paypal-box"><div style="font-size:24px;margin-bottom:6px;">💳</div><p>Payment via <strong>PayPal</strong> — after reviewing your request we'll send you a secure payment link directly to your email.</p></div>
-      <button class="send-btn" onclick="sendAdvForm()">Send Request ✦</button>
-    </div>
-    <div style="text-align:center;margin-top:14px;font-size:11px;color:var(--muted);padding-bottom:8px;">📧 info@mawlidi.com · Altayeb Amer</div>
-    <div class="footer" style="padding-top:12px;"><div class="footer-brand">Mawlidi 🌙</div>Altayeb Amer · mawlidi.com</div>
-  </div>
-</div>
 
-<div class="ov" id="about-ov">
-  <div class="ov-hdr">
-    <div style="width:54px"></div>
-    <span class="ov-title">ℹ️ About</span>
-    <button class="bb" onclick="closeOv('about-ov')">Back →</button>
-  </div>
-  <div class="ov-body">
-    <div class="about-card">
-      <div class="about-logo">Mawlidi 🌙</div>
-      <p class="about-text">Mawlidi is an independent Arabic digital project offering precise tools to calculate Hijri age, alongside cultural and educational content that helps people understand the human connection to time.<br><br>We believe that a person is far more complex than their birth date, and that character is shaped by faith, upbringing, environment, and life experiences.<br><br>This site makes no predictions or claims of knowing the unseen — only God knows that.</p>
-    </div>
-    <div class="about-card">
-      <div style="font-size:12px;color:var(--gold);font-weight:700;text-transform:uppercase;margin-bottom:14px;">✦ Our Values</div>
-      <ul class="val-list">
-        <li><span class="val-icon">🎯</span><div><strong>Accuracy</strong><br>Calculation algorithms based on the official Hijri calendar</div></li>
-        <li><span class="val-icon">📚</span><div><strong>Knowledge</strong><br>Cultural and historical content that respects the intellect</div></li>
-        <li><span class="val-icon">🛡️</span><div><strong>Integrity</strong><br>No predictions, no claims of knowing the unseen</div></li>
-        <li><span class="val-icon">🔒</span><div><strong>Privacy</strong><br>No personal data is stored or transmitted</div></li>
-      </ul>
-    </div>
-    <div class="about-card">
-      <div style="font-size:12px;color:var(--gold);font-weight:700;text-transform:uppercase;margin-bottom:10px;">Founder</div>
-      <div style="font-size:17px;color:var(--text);font-weight:800;font-family:'Playfair Display',serif;">Altayeb Amer</div>
-      <div style="font-size:13px;color:var(--gold);margin-top:2px;font-weight:700;">الفنان الطيب عامر</div>
-      <div style="font-size:12px;color:var(--muted);margin-top:4px;">Founder · Mawlidi.com</div>
-    </div>
-    <div class="adv-cta-box">
-      <div class="adv-cta-title">💎 Advertise With Us</div>
-      <div class="adv-cta-text">Mawlidi reaches an audience actively searching for Hijri birthday occasions — meaning your ad appears exactly when users are most ready to celebrate and purchase.</div>
-      <ul class="adv-cta-points">
-        <li>Direct reach to Gulf, Saudi & UAE audience</li>
-        <li>Guaranteed placement in results & articles</li>
-        <li>Flexible packages from AED 200/month</li>
-        <li>Monthly performance reports</li>
-        <li>Secure payment via PayPal</li>
-      </ul>
-      <button class="adv-cta-btn" onclick="openOv('adv-ov')">Start Advertising →</button>
-    </div>
-    <div class="about-card">
-      <div style="font-size:12px;color:var(--gold);font-weight:700;text-transform:uppercase;margin-bottom:14px;">📧 Contact</div>
-      <div class="contact-grid">
-        <button type="button" class="contact-btn" id="mailCard" aria-expanded="false" aria-controls="mailPanel">✉️ Email Us</button>
-        <a href="https://wa.me/971561122789?text=Hello, I'd like to contact you about Mawlidi" class="contact-btn">📱 WhatsApp</a>
-        <button class="contact-btn full" onclick="openOv('adv-ov')">💎 Advertise on Mawlidi</button>
-      </div>
-      <section id="mailPanel" hidden>
-        <span class="addr">Or email us directly: info@mawlidi.com</span>
-        <form id="mailForm" novalidate>
-          <div class="fld"><label for="mailEmail">Your email</label>
-            <input id="mailEmail" name="email" type="email" inputmode="email" autocomplete="email"
-                   required maxlength="254" placeholder="your@email.com" dir="ltr"></div>
-          <div class="fld"><label for="mailSubject">Subject</label>
-            <input id="mailSubject" name="subject" type="text" required maxlength="200" placeholder="Enquiry · Error report · Advertising…"></div>
-          <div class="fld"><label for="mailMessage">Message</label>
-            <textarea id="mailMessage" name="message" required maxlength="5000" placeholder="The date you entered and the result you expected…"></textarea></div>
-          <div class="trap" aria-hidden="true"><label for="mailTrap">Leave this field empty</label>
-            <input id="mailTrap" name="_trap" type="text" tabindex="-1" autocomplete="off"></div>
-          <button id="mailSend" type="submit">Send message</button>
-          <p class="mailnote" id="mailNote" hidden></p>
-          <p style="margin-top:12px;font-size:11.5px;color:var(--muted);">We never store or share your email — it is used only to reply to you.</p>
-        </form>
-      </section>
-    </div>
-    <div class="footer" style="padding-top:16px;"><div class="footer-brand">Mawlidi 🌙</div>All rights reserved © 2025 · mawlidi.com<br>Altayeb Amer · الفنان الطيب عامر</div>
-  </div>
-</div>
 
-<nav class="bnav">
-  <button class="nb on" id="nb-home" onclick="goHome()"><span class="ni">🌙</span><span class="nl">Mawlidi</span></button>
-  <button class="nb" id="nb-obs"  onclick="navTo('obs-ov')"><span class="ni">🔭</span><span class="nl">Obs.</span></button>
-  <button class="nb" id="nb-arts" onclick="navTo('arts-ov')"><span class="ni">📖</span><span class="nl">Articles</span></button>
-  <button class="nb" id="nb-adv"  onclick="navTo('adv-ov')"><span class="ni">💎</span><span class="nl">Advertise</span></button>
-  <button class="nb" id="nb-about" onclick="navTo('about-ov')"><span class="ni">ℹ️</span><span class="nl">About</span></button>
+<nav class="bnav" id="bnav-main">
+  <a href="./" class="on"><span class="ni">🌙</span><span class="nl">Mawlidi</span></a>
+  <a href="observatory/"><span class="ni">🔭</span><span class="nl">Observatory</span></a>
+  <a href="articles/"><span class="ni">📖</span><span class="nl">Articles</span></a>
+  <a href="advertise/"><span class="ni">💎</span><span class="nl">Advertise</span></a>
+  <a href="about/"><span class="ni">ℹ️</span><span class="nl">About</span></a>
 </nav>
 
 <script src="../assets/hijri.js"></script>
@@ -744,7 +616,7 @@ function buildResultHTML(yr,mon,day,bH,tH,tJD){
   <div style="background:rgba(201,168,76,0.06);border:1px solid var(--border);border-radius:18px;padding:20px;margin-top:14px;text-align:center;">
     <div style="font-size:14px;color:var(--gold);font-weight:700;margin-bottom:6px;">✦ Advertise on Mawlidi</div>
     <div style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.6;">Direct reach to Hijri birthday seekers · Packages from AED 200</div>
-    <button onclick="openOv('adv-ov')" style="background:var(--gold);border:none;border-radius:12px;padding:12px 24px;color:#07071A;font-size:13px;font-family:'Lato',sans-serif;font-weight:700;cursor:pointer;text-transform:uppercase;">Contact Us</button>
+    <a href="advertise/" style="display:inline-block;text-decoration:none;background:var(--gold);border:none;border-radius:12px;padding:12px 24px;color:#07071A;font-size:13px;font-family:'Lato',sans-serif;font-weight:700;cursor:pointer;text-transform:uppercase;">Contact Us</a>
   </div>
   <div style="font-size:10px;color:var(--muted);text-align:center;margin-top:16px;line-height:1.7;">
     ± 1 day depending on actual moon sighting<br>
@@ -878,21 +750,7 @@ const OBS_ARTS=[
   <span class="src">Sources: "Birth Customs Around the World" — National Geographic, "Rulings on the Newborn in Islamic Jurisprudence", "Cultural Anthropology" by Conrad Kottak</span>`},
 ];
 
-(function(){
-  const el=document.getElementById('obs-cats');
-  OBS_CATS.forEach(o=>{
-    const d=document.createElement('div');d.className='obs-cat';
-    d.innerHTML=`<div class="obs-icon">${o.icon}</div><div class="obs-name">${o.name}</div><div class="obs-desc">${o.desc}</div>`;
-    d.onclick=()=>{const match=OBS_ARTS.find(a=>a.cat===o.cat);if(match)openArt(match.id,'obs');else toast(`Coming soon: articles on ${o.name}`);};
-    el.appendChild(d);
-  });
-  const al=document.getElementById('obs-arts-list');
-  OBS_ARTS.forEach(a=>{
-    const d=document.createElement('div');d.className='obs-art-item';
-    d.innerHTML=`<span>${a.icon}</span><span style="flex:1;">${a.title}</span><span class="obs-art-arrow">→</span>`;
-    d.onclick=()=>openArt(a.id,'obs');al.appendChild(d);
-  });
-})();
+
 
 // ═══ ARTICLES ═══
 const ARTS=[
@@ -1205,8 +1063,6 @@ async function loadContent() {
     }
   } catch(e) { console.log('Using embedded content'); }
   renderHomePreview();
-  renderChips();
-  renderArtsList();
 }
 
 function renderHomePreview() {
@@ -1226,63 +1082,6 @@ function renderHomePreview() {
 loadContent();
 
 let curCat='all';
-function filterCat(cat){curCat=cat;renderChips();renderArtsList();}
-function renderChips(){
-  const nm={all:'🌟 All',birth:'🌱 Birth',psychology:'🧠 Psychology',sky:'🌌 Sky',hijri:'📅 Hijri',cultures:'🌍 Cultures',islam:'🌙 Islam'};
-  const cats=['all',...new Set(ARTS.map(a=>a.cat))];
-  const el=document.getElementById('art-chips');el.innerHTML='';
-  cats.forEach(c=>{
-    const b=document.createElement('button');b.className=`chip${c===curCat?' on':''}`;
-    b.textContent=nm[c]||c;b.onclick=()=>filterCat(c);el.appendChild(b);
-  });
-}
-function renderArtsList(){
-  const el=document.getElementById('arts-list');el.innerHTML='';
-  const list=curCat==='all'?ARTS:ARTS.filter(a=>a.cat===curCat);
-  list.forEach(a=>{
-    const d=document.createElement('div');d.className='art-card';
-    d.innerHTML=`<div class="ac-cat">${a.cat_en}</div><div class="ac-title">${a.title}</div><div class="ac-sub">${a.sub}</div><div class="ac-foot"><span class="ac-time">⏱ ${a.min} min</span><button class="rbtn" onclick="openArt('${a.id}','arts')">Read →</button></div>`;
-    el.appendChild(d);
-  });
-}
-
-// ═══ ARTICLE READER ═══
-let reactCounts={};
-function openArt(id,src){
-  const a=ARTS.find(x=>x.id===id)||OBS_ARTS.find(x=>x.id===id);
-  if(!a)return;
-  if(!reactCounts[id])reactCounts[id]={clap:0,think:0,star:0,love:0};
-  const rc=reactCounts[id];
-  document.getElementById('rdr-top').textContent=a.cat_en;
-  document.getElementById('rdr-body').innerHTML=`
-    <div class="rdr-cat">${a.cat_en}</div>
-    <div class="rdr-title">${a.title}</div>
-    <div class="rdr-sub">${a.sub}</div>
-    <div class="rdr-meta"><span class="rdr-time">⏱ ${a.min} MIN READ</span></div>
-    <div class="rdr-content">${a.body}</div>
-    <div class="art-reactions">
-      <div class="art-react-title">💬 Did you enjoy this article?</div>
-      <div class="react-btns">
-        <button class="react-btn" id="r-clap-${id}" onclick="doReact('${id}','clap')">👏<span class="react-count" id="rc-clap-${id}">${rc.clap||''}</span></button>
-        <button class="react-btn" id="r-think-${id}" onclick="doReact('${id}','think')">🤔<span class="react-count" id="rc-think-${id}">${rc.think||''}</span></button>
-        <button class="react-btn" id="r-star-${id}" onclick="doReact('${id}','star')">⭐<span class="react-count" id="rc-star-${id}">${rc.star||''}</span></button>
-        <button class="react-btn" id="r-love-${id}" onclick="doReact('${id}','love')">❤️<span class="react-count" id="rc-love-${id}">${rc.love||''}</span></button>
-      </div>
-      <div class="share-section">
-        <div class="share-title">✦ Share This Article</div>
-        <div class="share-btns">
-          <button class="share-btn" onclick="copyArtLink('${id}')">🔗 Copy Link</button>
-          <button class="share-btn wa" onclick="shareWA('${a.title.replace(/'/g,"\\'")}')">📱 WhatsApp</button>
-        </div>
-      </div>
-    </div>
-    <div class="art-author"><strong>Altayeb Amer</strong><br><span style="color:var(--gold);font-size:12px;">Mawlidi.com</span></div>`;
-  document.getElementById('rdr').classList.add('on');
-  document.querySelector('#rdr .rdr-body').scrollTop=0;setPg(0);
-  document.querySelector('#rdr .rdr-body').addEventListener('scroll',function(){
-    const p=this.scrollTop/(this.scrollHeight-this.clientHeight)*100;setPg(p);
-  },{once:false,passive:true});
-}
 function doReact(id,type){
   if(!reactCounts[id])reactCounts[id]={clap:0,think:0,star:0,love:0};
   const btn=document.getElementById(`r-${type}-${id}`);
@@ -1301,31 +1100,6 @@ function shareWA(title){
 function closeRdr(){document.getElementById('rdr').classList.remove('on');}
 
 // ═══ NAV ═══
-const ALL_OVS=['obs-ov','arts-ov','adv-ov','about-ov'];
-function openOv(id){
-  document.getElementById('rdr').classList.remove('on');
-  document.getElementById('rs').classList.remove('on');
-  ALL_OVS.forEach(o=>document.getElementById(o).classList.remove('on'));
-  document.getElementById(id).classList.add('on');
-  // Scroll to top every time
-  const body = document.querySelector('#'+id+' .ov-body');
-  if(body) body.scrollTop = 0;
-  if(id==='arts-ov'){renderChips();renderArtsList();}
-  const nm={'obs-ov':'obs','arts-ov':'arts','adv-ov':'adv','about-ov':'about'};
-  setNav(nm[id]||'home');
-}
-function closeOv(id){document.getElementById(id).classList.remove('on');const b=document.querySelector('#'+id+' .ov-body');if(b)b.scrollTop=0;setNav('home');}
-function goHome(){
-  ALL_OVS.forEach(o=>document.getElementById(o).classList.remove('on'));
-  document.getElementById('rs').classList.remove('on');
-  document.getElementById('rdr').classList.remove('on');
-  setNav('home');
-  window.scrollTo({top:0,behavior:'smooth'});
-  const page = document.getElementById('home-pg');
-  if(page) page.scrollTop = 0;
-  document.documentElement.scrollTop = 0;
-  document.body.scrollTop = 0;
-}
 function setNav(a){['home','obs','arts','adv','about'].forEach(n=>{const b=document.getElementById('nb-'+n);if(b)b.classList.toggle('on',n===a);});}
 function setPg(p){document.getElementById('pgbar').style.width=p+'%';}
 
@@ -1356,11 +1130,6 @@ function sendAdvForm(){
 }
 function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('on');setTimeout(()=>el.classList.remove('on'),2500);}
 document.addEventListener('keydown',e=>{if(e.key==='Enter')calc();});
-function navTo(ovId){
-  document.getElementById('rdr').classList.remove('on');
-  document.getElementById('rs').classList.remove('on');
-  openOv(ovId);
-}
 </script>
 <script src="../assets/ads.js"></script>
 <script src="../assets/contact.js" defer></script>

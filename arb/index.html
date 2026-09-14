@@ -481,22 +481,12 @@ html,body{height:100%;font-family:'Cairo',sans-serif;background:var(--bg);color:
 
   <div class="sec" style="padding-top:22px;">
     <div class="teaser-cards">
-      <div class="teaser" onclick="openOv('obs-ov')">
+      <a class="teaser" href="observatory/">
         <div class="teaser-icon">🔭</div>
         <div class="teaser-body"><div class="teaser-title">مرصد المواليد</div><div class="teaser-desc">12 تصنيفاً معرفياً في علم النفس والتاريخ والكون</div></div>
         <div class="teaser-arrow">←</div>
-  </div>
+      </a>
 
-  <!-- ENGAGE -->
-  <div class="sec" style="padding-top:28px;">
-    <h2 class="engage-title">اكتشف ما وراء تاريخ ميلادك</h2>
-    <p class="engage-sub">مَوْلِدي ليس مجرد حاسبة — رحلة في الزمن والحضارة والهوية</p>
-    <div class="stat-row">
-      <div class="stat-box"><div class="stat-num">12</div><div class="stat-lbl">تصنيف معرفي</div></div>
-      <div class="stat-box"><div class="stat-num">15+</div><div class="stat-lbl">مقالة عميقة</div></div>
-      <div class="stat-box"><div class="stat-num" id="hyNow">—</div><div class="stat-lbl">سنة هجرية</div></div>
-    </div>
-      </div>
       <a class="teaser season-teaser" href="ramadan-2027/">
         <div class="teaser-icon">🌙</div>
         <div class="teaser-body"><div class="teaser-title">متى رمضان 2027؟</div><div class="teaser-desc">التاريخ الهجري والميلادي وعدّ تنازلي حيّ</div></div>
@@ -547,6 +537,17 @@ html,body{height:100%;font-family:'Cairo',sans-serif;background:var(--bg);color:
         <div class="teaser-body"><div class="teaser-title">مقالات معمّقة</div><div class="teaser-desc">اقرأ عن لماذا نختلف وعن جمال التقويم القمري</div></div>
         <div class="teaser-arrow">←</div>
       </a>
+    </div>
+  </div>
+
+  <!-- ENGAGE -->
+  <div class="sec" style="padding-top:28px;">
+    <h2 class="engage-title">اكتشف ما وراء تاريخ ميلادك</h2>
+    <p class="engage-sub">مَوْلِدي ليس مجرد حاسبة — رحلة في الزمن والحضارة والهوية</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">12</div><div class="stat-lbl">تصنيف معرفي</div></div>
+      <div class="stat-box"><div class="stat-num">15+</div><div class="stat-lbl">مقالة عميقة</div></div>
+      <div class="stat-box"><div class="stat-num" id="hyNow">—</div><div class="stat-lbl">سنة هجرية</div></div>
     </div>
   </div>
 
@@ -603,9 +604,9 @@ html,body{height:100%;font-family:'Cairo',sans-serif;background:var(--bg);color:
   <div class="footer">
     <div class="footer-brand">مَوْلِدي 🌙</div>
     <div class="footer-links">
-      <span class="footer-link" onclick="openOv('about-ov')">من نحن</span>
-      <span class="footer-link" onclick="openOv('obs-ov')">المرصد</span>
-      <span class="footer-link" onclick="openOv('arts-ov')">المقالات</span>
+      <a class="footer-link" href="about/" style="text-decoration:none;">من نحن</a>
+      <a class="footer-link" href="observatory/" style="text-decoration:none;">المرصد</a>
+      <a class="footer-link" href="articles/" style="text-decoration:none;">المقالات</a>
       <a class="footer-link" href="articles/" style="text-decoration:none;">أرشيف المقالات</a>
       <a class="footer-link" href="converter/" style="text-decoration:none;">محوّل التاريخ</a>
       <a class="footer-link" href="calendar/" style="text-decoration:none;">التقويم الهجري</a>
@@ -622,7 +623,7 @@ html,body{height:100%;font-family:'Cairo',sans-serif;background:var(--bg);color:
       <a class="footer-link" href="ramadan-2027/" style="text-decoration:none;">رمضان 2027</a>
       <a class="footer-link" href="eid-alfitr-2027/" style="text-decoration:none;">عيد الفطر 2027</a>
       <a class="footer-link" href="eid-aladha-2027/" style="text-decoration:none;">عيد الأضحى 2027</a>
-      <span class="footer-link" onclick="openOv('adv-ov')">أعلن معنا</span>
+      <a class="footer-link" href="advertise/" style="text-decoration:none;">أعلن معنا</a>
     </div>
     الفنان الطيب عامر · Altayeb Amer · جميع الحقوق محفوظة © ٢٠٢٥ · mawlidi.com
   </div>
@@ -639,49 +640,8 @@ html,body{height:100%;font-family:'Cairo',sans-serif;background:var(--bg);color:
 </div>
 
 <!-- OBSERVATORY SCREEN -->
-<div class="ov" id="obs-ov">
-  <div class="ov-hdr">
-    <button class="bb" onclick="closeOv('obs-ov')">← رجوع</button>
-    <span class="ov-title">🔭 مرصد المواليد</span>
-    <div style="width:54px"></div>
-  </div>
-  <div class="ov-body">
-    <div class="obs-notice"><strong>✦ ميثاق المرصد</strong><br>مساحة ثقافية ومعرفية — لا توقعات ولا ادعاء بمعرفة الغيب الذي لا يعلمه إلا الله سبحانه وتعالى</div>
-    <div class="obs-cats" id="obs-cats"></div>
-    <div class="obs-excl-wrap">
-      <div class="obs-excl-hdr">✦ مقالات المرصد الحصرية</div>
-      <div id="obs-arts-list"></div>
-    </div>
-    <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:16px;line-height:1.7;padding-bottom:8px;">
-      🌙 المرصد مساحة للتأمل المعرفي — لا توقعات ولا ادعاء بمعرفة الغيب
-    </div>
-    <div class="footer" style="padding-top:20px;">
-      <div class="footer-brand">مَوْلِدي 🌙</div>
-      الفنان الطيب عامر · mawlidi.com
-    </div>
-  </div>
-</div>
 
 <!-- ARTICLES SCREEN -->
-<div class="ov" id="arts-ov">
-  <div class="ov-hdr">
-    <button class="bb" onclick="closeOv('arts-ov')">← رجوع</button>
-    <span class="ov-title">📖 المقالات</span>
-    <div style="width:54px"></div>
-  </div>
-  <div class="ov-body">
-    <div style="background:rgba(201,168,76,0.06);border:1px solid var(--border);border-radius:14px;
-      padding:12px 16px;margin-bottom:18px;font-size:11px;color:rgba(201,168,76,0.8);line-height:1.7;text-align:center;">
-      ✦ جميع المقالات للثقافة والتأمل — لا توقعات ولا ادعاء بمعرفة الغيب
-    </div>
-    <div class="chips" id="art-chips"></div>
-    <div id="arts-list"></div>
-    <div class="footer" style="padding-top:20px;">
-      <div class="footer-brand">مَوْلِدي 🌙</div>
-      الفنان الطيب عامر · mawlidi.com
-    </div>
-  </div>
-</div>
 
 <!-- ARTICLE READER -->
 <div id="rdr">
@@ -694,211 +654,16 @@ html,body{height:100%;font-family:'Cairo',sans-serif;background:var(--bg);color:
 </div>
 
 <!-- ADVERTISE SCREEN -->
-<div class="ov" id="adv-ov">
-  <div class="ov-hdr">
-    <button class="bb" onclick="closeOv('adv-ov')">← رجوع</button>
-    <span class="ov-title">💎 أعلن معنا</span>
-    <div style="width:54px"></div>
-  </div>
-  <div class="ov-body">
-    <div class="adv-hero">
-      <div class="adv-hero-title">💎 أعلن في مَوْلِدي</div>
-      <div class="adv-hero-sub">وصول مباشر لجمهور يبحث عن أعياد الميلاد الهجرية من السعودية والإمارات والخليج العربي</div>
-      <div class="adv-audience">🎯 جمهور مَوْلِدي: محلات الكيك · متاجر الهدايا · التصوير · تنظيم الحفلات · الورود · الطباعة</div>
-    </div>
-
-    <div class="tier-card tier-plat">
-      <div class="tier-badge">PLATINUM ✦</div>
-      <div class="tier-name">الباقة البلاتينية</div>
-      <div class="tier-price"><span class="aed">د.إ</span>2,000</div>
-      <div class="tier-period">درهم إماراتي / شهر</div>
-      <ul class="tier-feats">
-        <li>أعلى ظهور — أول بطاقة بعد النتائج مباشرة</li>
-        <li>حجم كبير مع صورة ونص وزر دعوة للعمل</li>
-        <li>ظهور في صفحات المقالات</li>
-        <li>تقرير شهري بعدد النقرات والظهور</li>
-      </ul>
-      <button class="tier-btn" onclick="scrollToForm('بلاتيني')">تواصل للحجز</button>
-    </div>
-
-    <div class="tier-card tier-gold">
-      <div class="tier-badge">GOLD ★</div>
-      <div class="tier-name">الباقة الذهبية</div>
-      <div class="tier-price"><span class="aed">د.إ</span>1,000</div>
-      <div class="tier-period">درهم إماراتي / شهر</div>
-      <ul class="tier-feats">
-        <li>ظهور بعد إحصائيات النتائج</li>
-        <li>حجم متوسط مع صورة ونص وزر</li>
-        <li>ظهور في صفحة المقالات</li>
-      </ul>
-      <button class="tier-btn" onclick="scrollToForm('ذهبي')">تواصل للحجز</button>
-    </div>
-
-    <div class="tier-card tier-silver">
-      <div class="tier-badge">SILVER</div>
-      <div class="tier-name">الباقة الفضية</div>
-      <div class="tier-price"><span class="aed">د.إ</span>500</div>
-      <div class="tier-period">درهم إماراتي / شهر</div>
-      <ul class="tier-feats">
-        <li>بطاقتان داخل جدول النتائج</li>
-        <li>حجم صغير مع أيقونة ونص</li>
-      </ul>
-      <button class="tier-btn" onclick="scrollToForm('فضي')">تواصل للحجز</button>
-    </div>
-
-    <div class="tier-card tier-bronze">
-      <div class="tier-badge">BRONZE</div>
-      <div class="tier-name">الباقة البرونزية</div>
-      <div class="tier-price"><span class="aed">د.إ</span>200</div>
-      <div class="tier-period">درهم إماراتي / شهر</div>
-      <ul class="tier-feats">
-        <li>بطاقة أسفل صفحة النتائج</li>
-        <li>نص وزر فقط</li>
-      </ul>
-      <button class="tier-btn" onclick="scrollToForm('برونزي')">تواصل للحجز</button>
-    </div>
-
-    <!-- CONTACT FORM -->
-    <div class="adv-form-wrap" id="adv-form-wrap">
-      <div class="adv-form-title">📋 نموذج الحجز</div>
-      <div class="adv-form-sub">أكمل البيانات وسنتواصل معك خلال 24 ساعة لتأكيد التفاصيل وإتمام الدفع عبر PayPal.</div>
-      <div class="ff">
-        <label>نوع الباقة</label>
-        <select id="adv-tier">
-          <option value="بلاتيني">💠 الباقة البلاتينية — د.إ 2,000 / شهر</option>
-          <option value="ذهبي">⭐ الباقة الذهبية — د.إ 1,000 / شهر</option>
-          <option value="فضي">🥈 الباقة الفضية — د.إ 500 / شهر</option>
-          <option value="برونزي">🥉 الباقة البرونزية — د.إ 200 / شهر</option>
-        </select>
-      </div>
-      <div class="ff">
-        <label>البريد الإلكتروني</label>
-        <input type="email" id="adv-email" placeholder="example@email.com" dir="ltr">
-      </div>
-      <div class="ff">
-        <label>اسم النشاط التجاري</label>
-        <input type="text" id="adv-biz" placeholder="اسم متجرك أو نشاطك">
-      </div>
-      <div class="ff">
-        <label>رسالتك (اختياري)</label>
-        <textarea id="adv-msg" placeholder="تفاصيل إضافية أو أسئلة..."></textarea>
-      </div>
-      <div class="paypal-box">
-        <div style="font-size:24px;margin-bottom:6px;">💳</div>
-        <p>الدفع يتم عبر <strong>PayPal</strong> — بعد مراجعة طلبك وتأكيده، نرسل لك رابط الدفع الآمن مباشرة إلى بريدك الإلكتروني.</p>
-      </div>
-      <button class="send-btn" onclick="sendAdvForm()">إرسال الطلب ✦</button>
-    </div>
-    <div style="text-align:center;margin-top:14px;font-size:11px;color:var(--muted);padding-bottom:8px;">
-      📧 info@mawlidi.com · الفنان الطيب عامر
-    </div>
-    <div class="footer" style="padding-top:12px;">
-      <div class="footer-brand">مَوْلِدي 🌙</div>
-      الفنان الطيب عامر · mawlidi.com
-    </div>
-  </div>
-</div>
 
 <!-- ABOUT SCREEN -->
-<div class="ov" id="about-ov">
-  <div class="ov-hdr">
-    <button class="bb" onclick="closeOv('about-ov')">← رجوع</button>
-    <span class="ov-title">ℹ️ من نحن</span>
-    <div style="width:54px"></div>
-  </div>
-  <div class="ov-body">
-    <div class="about-card">
-      <div class="about-logo">مَوْلِدي 🌙</div>
-      <p class="about-text">مَوْلِدي مشروع عربي مستقل يهدف إلى تقديم أدوات دقيقة لحساب العمر الهجري، إضافة إلى محتوى ثقافي ومعرفي يساعد على فهم الإنسان وعلاقته بالزمن.<br><br>
-      نؤمن أن الإنسان أعقد من أن يُختزل في تاريخ ميلاد، وأن شخصيته تتشكل من الإيمان والتربية والبيئة والتجارب الحياتية.<br><br>
-      لا يقدم الموقع تنبؤات بالمستقبل أو ادعاءات بمعرفة الغيب — الغيب لا يعلمه إلا الله سبحانه وتعالى.</p>
-    </div>
-
-    <div class="partners-banner">
-      <div class="partners-title">🌟 جمهور مَوْلِدي الأعزاء</div>
-      <div class="partners-text">وصناع الفرح والسعادة الكرام، دامت أيامكم ملئ بتواريخ مميزة وذكريات لا تُنسى.</div>
-      <div class="partners-title" style="font-size:14px;margin:12px 0 6px;">💼 شركاء مَوْلِدي في صناعة الفرح</div>
-      <div class="partners-chips">
-        <span class="p-chip">🎂 محلات الكيك</span>
-        <span class="p-chip">🎁 متاجر الهدايا</span>
-        <span class="p-chip">📸 التصوير</span>
-        <span class="p-chip">🎉 تنظيم الحفلات</span>
-        <span class="p-chip">🌹 الورود</span>
-        <span class="p-chip">🖨️ الطباعة</span>
-      </div>
-    </div>
-
-    <div class="about-card">
-      <div style="font-size:13px;color:var(--gold);font-weight:700;margin-bottom:14px;">✦ قيمنا</div>
-      <ul class="val-list">
-        <li><span class="val-icon">🎯</span><div><strong>الدقة</strong><br>خوارزميات حساب مبنية على التقويم الهجري الرسمي</div></li>
-        <li><span class="val-icon">📚</span><div><strong>المعرفة</strong><br>محتوى ثقافي وتاريخي يحترم العقل ويغني الفكر</div></li>
-        <li><span class="val-icon">🛡️</span><div><strong>الأمانة</strong><br>لا توقعات ولا ادعاء بمعرفة الغيب</div></li>
-        <li><span class="val-icon">🔒</span><div><strong>الخصوصية</strong><br>لا يتم حفظ أو إرسال أي بيانات شخصية</div></li>
-      </ul>
-    </div>
-
-    <div class="about-card">
-      <div style="font-size:12px;color:var(--gold);font-weight:700;margin-bottom:10px;">المؤسس</div>
-      <div style="font-size:17px;color:var(--text);font-weight:800;font-family:'Tajawal',sans-serif;">الفنان الطيب عامر</div>
-      <div style="font-size:13px;color:var(--gold);margin-top:2px;font-family:'Lato',sans-serif;font-weight:700;">Altayeb Amer</div>
-      <div style="font-size:12px;color:var(--muted);margin-top:4px;">مؤسس مَوْلِدي · Founder</div>
-    </div>
-
-    <div class="adv-cta-box">
-      <div class="adv-cta-title">💎 أعلن معنا وانمُ معنا</div>
-      <div class="adv-cta-text">مَوْلِدي يصل لجمهور يبحث بنشاط عن المناسبات الهجرية وأعياد الميلاد — إعلانك يظهر في اللحظة التي يكون فيها المستخدم أكثر استعداداً للاحتفال والشراء.</div>
-      <ul class="adv-cta-points">
-        <li>وصول مباشر لجمهور الخليج والسعودية والإمارات</li>
-        <li>ظهور مضمون في النتائج والمقالات</li>
-        <li>باقات مرنة تبدأ من 200 درهم شهرياً</li>
-        <li>تقارير دورية لمتابعة أداء إعلانك</li>
-        <li>دفع آمن عبر PayPal</li>
-      </ul>
-      <button class="adv-cta-btn" onclick="openOv('adv-ov')">ابدأ الإعلان الآن ←</button>
-    </div>
-
-    <div class="about-card">
-      <div style="font-size:13px;color:var(--gold);font-weight:700;margin-bottom:14px;">📧 تواصل معنا</div>
-      <div class="contact-grid">
-        <button type="button" class="contact-btn" id="mailCard" aria-expanded="false" aria-controls="mailPanel">✉️ البريد الإلكتروني</button>
-        <a href="https://wa.me/971561122789?text=مرحباً، أريد التواصل بخصوص مَوْلِدي" class="contact-btn">📱 واتساب</a>
-        <button class="contact-btn full" onclick="openOv('adv-ov')">💎 الإعلان في مَوْلِدي</button>
-      </div>
-      <section id="mailPanel" hidden>
-        <span class="addr">للتواصل المباشر: info@mawlidi.com</span>
-        <form id="mailForm" novalidate>
-          <div class="fld"><label for="mailEmail">بريدك الإلكتروني</label>
-            <input id="mailEmail" name="email" type="email" inputmode="email" autocomplete="email"
-                   required maxlength="254" placeholder="your@email.com" dir="ltr"></div>
-          <div class="fld"><label for="mailSubject">الموضوع</label>
-            <input id="mailSubject" name="subject" type="text" required maxlength="200" placeholder="استفسار · بلاغ عن خطأ · إعلان…"></div>
-          <div class="fld"><label for="mailMessage">الرسالة</label>
-            <textarea id="mailMessage" name="message" required maxlength="5000" placeholder="اذكر التاريخ الذي أدخلته والنتيجة التي توقّعتها…"></textarea></div>
-          <div class="trap" aria-hidden="true"><label for="mailTrap">Leave this field empty</label>
-            <input id="mailTrap" name="_trap" type="text" tabindex="-1" autocomplete="off"></div>
-          <button id="mailSend" type="submit">إرسال الرسالة</button>
-          <p class="mailnote" id="mailNote" hidden></p>
-          <p style="margin-top:12px;font-size:11.5px;color:var(--muted);">لا نحتفظ ببريدك ولا نشاركه — نستخدمه للرد عليك وحده.</p>
-        </form>
-      </section>
-    </div>
-
-    <div class="footer" style="padding-top:16px;">
-      <div class="footer-brand">مَوْلِدي 🌙</div>
-      جميع الحقوق محفوظة © ٢٠٢٥ · mawlidi.com<br>
-      الفنان الطيب عامر · Altayeb Amer
-    </div>
-  </div>
-</div>
 
 <!-- BOTTOM NAV -->
 <nav class="bnav" id="bnav-main">
-  <button class="nb on" id="nb-home" onclick="goHome()"><span class="ni">🌙</span><span class="nl">مَوْلِدي</span></button>
-  <button class="nb" id="nb-obs"  onclick="navTo('obs-ov')"><span class="ni">🔭</span><span class="nl">المرصد</span></button>
-  <button class="nb" id="nb-arts" onclick="navTo('arts-ov')"><span class="ni">📖</span><span class="nl">مقالات</span></button>
-  <button class="nb" id="nb-adv"  onclick="navTo('adv-ov')"><span class="ni">💎</span><span class="nl">أعلن</span></button>
-  <button class="nb" id="nb-about" onclick="navTo('about-ov')"><span class="ni">ℹ️</span><span class="nl">من نحن</span></button>
+  <a href="./" class="on"><span class="ni">🌙</span><span class="nl">مَوْلِدي</span></a>
+  <a href="observatory/"><span class="ni">🔭</span><span class="nl">المرصد</span></a>
+  <a href="articles/"><span class="ni">📖</span><span class="nl">مقالات</span></a>
+  <a href="advertise/"><span class="ni">💎</span><span class="nl">أعلن</span></a>
+  <a href="about/"><span class="ni">ℹ️</span><span class="nl">من نحن</span></a>
 </nav>
 
 <script src="../assets/hijri.js"></script>
@@ -988,7 +753,7 @@ function buildResultHTML(yr,mon,day,bH,tH,tJD){
   <div style="background:rgba(201,168,76,0.06);border:1px solid var(--border);border-radius:18px;padding:20px;margin-top:14px;text-align:center;">
     <div style="font-size:14px;color:var(--gold);font-weight:700;margin-bottom:6px;">✦ أعلن معنا في مَوْلِدي</div>
     <div style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.6;">وصول مباشر لجمهور يبحث عن أعياد الميلاد الهجرية · باقات من 200 درهم</div>
-    <button onclick="openOv('adv-ov')" style="background:var(--gold);border:none;border-radius:12px;padding:12px 24px;color:#07071A;font-size:13px;font-family:'Cairo',sans-serif;font-weight:700;cursor:pointer;">تواصل معنا</button>
+    <a href="advertise/" style="display:inline-block;text-decoration:none;background:var(--gold);border:none;border-radius:12px;padding:12px 24px;color:#07071A;font-size:13px;font-family:'Cairo',sans-serif;font-weight:700;cursor:pointer;">تواصل معنا</a>
   </div>
   <div style="font-size:10px;color:var(--muted);text-align:center;margin-top:16px;line-height:1.7;">
     ± يوم حسب رؤية الهلال الفعلية<br>
@@ -1157,32 +922,8 @@ const OBS_ARTS=[
 <span class="src">المصادر: "Birth Customs Around the World" — National Geographic، "Ubuntu Philosophy" لMogobe Ramose، "Cultural Anthropology" لConrad Kottak، "أحكام المولود في الفقه الإسلامي"</span>`},
 ];
 
-(function(){
-  const el=document.getElementById('obs-cats');
-  OBS_CATS.forEach(o=>{
-    const d=document.createElement('div');
-    d.className='obs-cat';
-    d.innerHTML=`<div class="obs-icon">${o.icon}</div><div class="obs-name">${o.name}</div><div class="obs-desc">${o.desc}</div>`;
-    d.onclick=()=>{
-      const match=OBS_ARTS.find(a=>a.cat===o.cat);
-      if(match)openArt(match.id,'obs');
-      else toast(`قريباً: مقالات عن ${o.name}`);
-    };
-    el.appendChild(d);
-  });
-  renderObsArts();
-})();
 
-function renderObsArts(){
-  const el=document.getElementById('obs-arts-list');if(!el)return;
-  OBS_ARTS.forEach(a=>{
-    const d=document.createElement('div');
-    d.className='obs-art-item';
-    d.innerHTML=`<span>${a.icon}</span><span style="flex:1;">${a.title}</span><span class="obs-art-arrow">←</span>`;
-    d.onclick=()=>openArt(a.id,'obs');
-    el.appendChild(d);
-  });
-}
+
 
 // ═══ ARTICLES DATA (مستقلة تماماً عن المرصد) ═══
 const ARTS=[
@@ -1548,8 +1289,6 @@ async function loadContent() {
   }
   // Render after load attempt
   renderHomePreview();
-  renderChips();
-  renderArtsList();
 }
 
 function renderHomePreview() {
@@ -1575,67 +1314,6 @@ loadContent();
 
 // ═══ ARTS LIST ═══
 let curCat='all';
-function filterCat(cat){curCat=cat;renderChips();renderArtsList();}
-function renderChips(){
-  const nm={all:'🌟 الكل',birth:'🌱 الميلاد',psychology:'🧠 علم النفس',sky:'🌌 السماء',hijri:'📅 الهجري',cultures:'🌍 الثقافات',islam:'🌙 الإسلام',philosophy:'📖 الفلسفة'};
-  const cats=['all',...new Set(ARTS.map(a=>a.cat))];
-  const el=document.getElementById('art-chips');el.innerHTML='';
-  cats.forEach(c=>{
-    const b=document.createElement('button');
-    b.className=`chip${c===curCat?' on':''}`;b.textContent=nm[c]||c;
-    b.onclick=()=>filterCat(c);el.appendChild(b);
-  });
-}
-function renderArtsList(){
-  const el=document.getElementById('arts-list');el.innerHTML='';
-  const list=curCat==='all'?ARTS:ARTS.filter(a=>a.cat===curCat);
-  list.forEach(a=>{
-    const d=document.createElement('div');d.className='art-card';
-    d.innerHTML=`<div class="ac-cat">${a.cat_ar}</div><div class="ac-title">${a.title}</div>
-      <div class="ac-sub">${a.sub}</div>
-      <div class="ac-foot"><span class="ac-time">⏱ ${a.min} دقيقة</span>
-      <button class="rbtn" onclick="openArt('${a.id}','arts')">اقرأ ←</button></div>`;
-    el.appendChild(d);
-  });
-}
-
-// ═══ OPEN ARTICLE ═══
-let reactCounts={};
-function openArt(id,src){
-  const a=ARTS.find(x=>x.id===id)||OBS_ARTS.find(x=>x.id===id);
-  if(!a)return;
-  if(!reactCounts[id])reactCounts[id]={clap:0,think:0,star:0,love:0};
-  const rc=reactCounts[id];
-  document.getElementById('rdr-top').textContent=a.cat_ar;
-  document.getElementById('rdr-body').innerHTML=`
-    <div class="rdr-cat">${a.cat_ar}</div>
-    <div class="rdr-title">${a.title}</div>
-    <div class="rdr-sub">${a.sub}</div>
-    <div class="rdr-meta"><span class="rdr-time">⏱ ${a.min} دقيقة قراءة</span></div>
-    <div class="rdr-content">${a.body}</div>
-    <div class="art-reactions">
-      <div class="art-react-title">💬 هل أعجبتك المقالة؟</div>
-      <div class="react-btns">
-        <button class="react-btn" id="r-clap-${id}" onclick="doReact('${id}','clap')">👏<span class="react-count" id="rc-clap-${id}">${rc.clap||''}</span></button>
-        <button class="react-btn" id="r-think-${id}" onclick="doReact('${id}','think')">🤔<span class="react-count" id="rc-think-${id}">${rc.think||''}</span></button>
-        <button class="react-btn" id="r-star-${id}" onclick="doReact('${id}','star')">⭐<span class="react-count" id="rc-star-${id}">${rc.star||''}</span></button>
-        <button class="react-btn" id="r-love-${id}" onclick="doReact('${id}','love')">❤️<span class="react-count" id="rc-love-${id}">${rc.love||''}</span></button>
-      </div>
-      <div class="share-section">
-        <div class="share-title">✦ شارك المقالة</div>
-        <div class="share-btns">
-          <button class="share-btn" onclick="copyArtLink('${id}')">🔗 نسخ رابط المقالة</button>
-          <button class="share-btn wa" onclick="shareWA('${a.title.replace(/'/g,"\\'")}')">📱 واتساب</button>
-        </div>
-      </div>
-    </div>
-    <div class="art-author"><strong>الفنان الطيب عامر</strong><br><span style="color:var(--gold);font-size:12px;">Mawlidi.com</span></div>`;
-  document.getElementById('rdr').classList.add('on');
-  document.querySelector('#rdr .rdr-body').scrollTop=0;setPg(0);
-  document.querySelector('#rdr .rdr-body').addEventListener('scroll',function(){
-    const p=this.scrollTop/(this.scrollHeight-this.clientHeight)*100;setPg(p);
-  },{once:false,passive:true});
-}
 function doReact(id,type){
   if(!reactCounts[id])reactCounts[id]={clap:0,think:0,star:0,love:0};
   const btn=document.getElementById(`r-${type}-${id}`);
@@ -1654,26 +1332,6 @@ function shareWA(title){
 function closeRdr(){document.getElementById('rdr').classList.remove('on');}
 
 // ═══ NAV ═══
-const ALL_OVS=['obs-ov','arts-ov','adv-ov','about-ov'];
-function openOv(id){
-  document.getElementById('rdr').classList.remove('on');
-  document.getElementById('rs').classList.remove('on');
-  ALL_OVS.forEach(o=>document.getElementById(o).classList.remove('on'));
-  document.getElementById(id).classList.add('on');
-  // Scroll overlay body to top every time
-  const body = document.querySelector('#'+id+' .ov-body');
-  if(body) body.scrollTop = 0;
-  if(id==='arts-ov'){renderChips();renderArtsList();}
-  const nm={'obs-ov':'obs','arts-ov':'arts','adv-ov':'adv','about-ov':'about'};
-  setNav(nm[id]||'home');
-}
-function closeOv(id){
-  document.getElementById(id).classList.remove('on');
-  // Scroll overlay body back to top when closing
-  const body = document.querySelector('#'+id+' .ov-body');
-  if(body) body.scrollTop = 0;
-  setNav('home');
-}
 function goHome(){
   ALL_OVS.forEach(o=>document.getElementById(o).classList.remove('on'));
   document.getElementById('rs').classList.remove('on');
@@ -1714,7 +1372,7 @@ function sendAdvForm(){
     } else toast('تعذّر الإرسال، أعد المحاولة'); })
     .catch(()=>toast('تعذّر الإرسال، أعد المحاولة'));
 }
-function contactAdv(tier){openOv('adv-ov');setTimeout(()=>scrollToForm(tier),200);}
+function contactAdv(tier){ location.href='advertise/'; }
 
 // ═══ TOAST ═══
 function toast(msg){
@@ -1725,11 +1383,6 @@ function toast(msg){
 document.addEventListener('keydown',e=>{if(e.key==='Enter')calc();});
 
 // navTo: always close reader and result before navigating
-function navTo(ovId){
-  document.getElementById('rdr').classList.remove('on');
-  document.getElementById('rs').classList.remove('on');
-  openOv(ovId);
-}
 
 // ═══ CONTENT PROTECTION ═══
 document.addEventListener('contextmenu',function(e){

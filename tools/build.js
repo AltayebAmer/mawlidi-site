@@ -20,6 +20,8 @@ const cardPage      = require('./card.js');
 const mansionsPage  = require('./mansions.js');
 const zodiacPage    = require('./zodiac.js');
 const trustPage     = require('./pages.js');
+const observatoryPage = require('./observatory.js');
+const advertisePage = require('./advertise.js');
 const seasonPage    = require('./season.js');
 
 // السنوات الميلادية التي تُولَّد لها صفحات موسمية — أضف سنة هنا فقط
@@ -77,7 +79,14 @@ const SLUGS = {
   a11:'how-to-calculate-hijri-age',
   a12:'why-hijri-year-is-11-days-shorter',
   a13:'hijri-month-names-and-meanings',
-  a14:'why-ramadan-date-changes'
+  a14:'why-ramadan-date-changes',
+
+  // مقالات المرصد الحصرية — كانت بلا صفحات، تُفتح في قارئ داخلي فقط
+  o1:'what-happens-at-the-moment-of-birth',
+  o2:'the-moon-across-civilisations',
+  o3:'world-birth-statistics',
+  o4:'what-we-actually-inherit',
+  o5:'welcoming-the-newborn-rituals'
 };
 
 // المقالة → الأداة التي يحتاجها قارئها فعلاً بعد القراءة
@@ -105,9 +114,9 @@ const LANGS = {
 };
 
 /* ── استخراج مصفوفة ARTS من ملف HTML ── */
-function extractArts(html) {
-  const start = html.indexOf('const ARTS=[');
-  if (start === -1) throw new Error('لم يُعثر على مصفوفة ARTS');
+function extractArts(html, name = 'ARTS') {
+  const start = html.indexOf('const ' + name + '=[');
+  if (start === -1) throw new Error('لم يُعثر على مصفوفة ' + name);
   const open = html.indexOf('[', start);
   let depth = 0, i = open, inTpl = false, inStr = null;
   for (; i < html.length; i++) {
@@ -257,8 +266,11 @@ ${cards}
 // أي المعرّفات موجودة فعلاً في كل لغة — لضبط hreflang بالواقع لا بافتراض
 const PRESENT = {};
 for (const [lang, L] of Object.entries(LANGS)) {
-  PRESENT[lang] = new Set(
-    extractArts(fs.readFileSync(path.join(ROOT, L.file), 'utf8')).map(a => a.id));
+  const src = fs.readFileSync(path.join(ROOT, L.file), 'utf8');
+  PRESENT[lang] = new Set([
+    ...extractArts(src).map(a => a.id),
+    ...extractArts(src, 'OBS_ARTS').map(a => a.id)
+  ]);
 }
 
 /* ── حقن «أبرز المقالات» كـHTML ثابت في الصفحة الرئيسية ──
@@ -284,6 +296,50 @@ function injectPreview(lang, L, arts) {
   return false;
 }
 
+
+/* ── الشريط السفلي في كل صفحة ────────────────────────────
+   قرار المالك: يصير روابط حقيقية في كل الصفحات لا أزراراً في صفحتين.
+   يُحقن بمرور واحد بعد البناء لأن العمق يختلف: صفحة تحت /arb/X/
+   تحتاج ../ وصفحة مقالة تحت /arb/articles/slug/ تحتاج ../../ */
+const BNAV = {
+  arb:[['','🌙','مَوْلِدي'],['observatory/','🔭','المرصد'],['articles/','📖','مقالات'],
+       ['advertise/','💎','أعلن'],['about/','ℹ️','من نحن']],
+  eng:[['','🌙','Mawlidi'],['observatory/','🔭','Observatory'],['articles/','📖','Articles'],
+       ['advertise/','💎','Advertise'],['about/','ℹ️','About']]
+};
+
+function injectBnav() {
+  let done = 0;
+  const walk = (dir, lang) => {
+    for (const e of fs.readdirSync(dir, { withFileTypes:true })) {
+      const f = path.join(dir, e.name);
+      if (e.isDirectory()) { walk(f, lang); continue; }
+      if (e.name !== 'index.html') continue;
+
+      const rel = path.relative(path.join(ROOT, lang), f);
+      const depth = rel.split(path.sep).length - 1;
+      if (depth === 0) continue;                    // الصفحة الرئيسية لها شريطها
+      const pre = '../'.repeat(depth);
+      const section = rel.split(path.sep)[0] + '/';
+
+      const links = BNAV[lang].map(([href, icon, label]) => {
+        const on = href && section === href ? ' class="on"' : '';
+        return `<a href="${pre}${href}"${on}><span class="ni">${icon}</span>`
+             + `<span class="nl">${label}</span></a>`;
+      }).join('');
+      const tag = `<nav class="bnav" data-bnav>${links}</nav>\n`;
+
+      let h = fs.readFileSync(f, 'utf8');
+      const before = h;
+      h = h.replace(/<nav class="bnav" data-bnav>[\s\S]*?<\/nav>\n?/g, '');
+      h = h.replace('</body>', tag + '</body>');
+      if (h !== before) { fs.writeFileSync(f, h); done++; }
+    }
+  };
+  for (const lang of ['arb','eng']) walk(path.join(ROOT, lang), lang);
+  return done;
+}
+
 const today = new Date().toISOString().slice(0, 10);
 
 const urls = [
@@ -292,6 +348,7 @@ const urls = [
 ];
 let written = 0;
 const report = {};
+const obsCount = {};
 
 for (const [lang, L] of Object.entries(LANGS)) {
   const html = fs.readFileSync(path.join(ROOT, L.file), 'utf8');
@@ -315,6 +372,23 @@ for (const [lang, L] of Object.entries(LANGS)) {
       written++;
     }
   });
+  // مقالات المرصد الحصرية: كانت بلا صفحات وتُفتح في قارئ داخلي فقط.
+  // تُولَّد في مجلد articles نفسه لتكون روابط حقيقية قابلة للمشاركة،
+  // لكنها لا تدخل أرشيف المقالات لأن الموقع يعرضها بوصفها «حصرية للمرصد».
+  const obs = extractArts(html, 'OBS_ARTS').filter(a => SLUGS[a.id]);
+  obsCount[lang] = obs.length;
+  obs.forEach((art, i) => {
+    const sibs = [obs[(i+1)%obs.length], obs[(i+2)%obs.length]].filter(x => x && x.id !== art.id);
+    const hasAlt = PRESENT[lang === 'arb' ? 'eng' : 'arb'].has(art.id);
+    urls.push({ loc:`${SITE}/${lang}/articles/${SLUGS[art.id]}/`, pri:'0.7' });
+    if (!CHECK) {
+      const d = path.join(outDir, SLUGS[art.id]);
+      fs.mkdirSync(d, { recursive:true });
+      fs.writeFileSync(path.join(d, 'index.html'), articlePage(art, lang, L, sibs, hasAlt));
+      written++;
+    }
+  });
+
   if (!CHECK) {
     fs.mkdirSync(outDir, { recursive:true });
     fs.writeFileSync(path.join(outDir, 'index.html'), indexPage(arts, lang, L));
@@ -357,6 +431,25 @@ for (const [lang, L] of Object.entries(LANGS)) {
     }
   }
 
+  // صفحة «أعلن معنا»: كانت طبقة عائمة بلا رابط
+  urls.push({ loc:`${SITE}/${lang}/advertise/`, pri:'0.6' });
+  if (!CHECK) {
+    const ad = path.join(ROOT, lang, 'advertise');
+    fs.mkdirSync(ad, { recursive:true });
+    fs.writeFileSync(path.join(ad, 'index.html'), advertisePage(lang));
+    written++;
+  }
+
+  // صفحة المرصد: كانت طبقة عائمة بلا رابط
+  urls.push({ loc:`${SITE}/${lang}/observatory/`, pri:'0.8' });
+  if (!CHECK) {
+    const cats = extractArts(html, 'OBS_CATS');
+    const od = path.join(ROOT, lang, 'observatory');
+    fs.mkdirSync(od, { recursive:true });
+    fs.writeFileSync(path.join(od, 'index.html'), observatoryPage(lang, cats, obs, SLUGS));
+    written++;
+  }
+
   // صفحات الثقة: مستقلة وقابلة للفهرسة، وشرط أساسي لقبول AdSense
   for (const slug of trustPage.SLUGS) {
     urls.push({ loc:`${SITE}/${lang}/${slug}/`, pri:'0.5' });
@@ -392,11 +485,13 @@ ${urls.map(u => `  <url>
 if (!CHECK) fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), xml);
 
 if (!CHECK) {
+  console.log(`الشريط السفلي: حُقن في ${injectBnav()} صفحة`);
   const n = injectAnalytics();
   if (CF_ANALYTICS_TOKEN) console.log(`Cloudflare Analytics: حُقن في ${n} صفحة`);
   else if (n) console.log(`Cloudflare Analytics: أُزيل من ${n} صفحة (لا token)`);
 }
 
 console.log(`مقالات عربية: ${report.arb} | مقالات إنجليزية: ${report.eng}`);
+console.log(`مقالات المرصد: ${obsCount.arb} عربية · ${obsCount.eng} إنجليزية`);
 console.log(`روابط في sitemap: ${urls.length}`);
 console.log(CHECK ? 'فحص فقط — لم يُكتب شيء' : `ملفات مكتوبة: ${written} + sitemap.xml`);
