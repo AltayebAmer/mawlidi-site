@@ -7,6 +7,15 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), camera=(), microphone=()
 
+# الجذر: كان حتى وقت قريب هو الموقع القديم كاملاً (ملف 172KB)، فنسخة قديمة
+# منه بقيت في ذاكرة بعض المتصفحات وتُعرض بدل التحويل. بلا هذه القاعدة كان /
+# يرث الافتراضي ولا يُراجَع.
+/
+  Cache-Control: no-store, must-revalidate
+
+/index.html
+  Cache-Control: no-store, must-revalidate
+
 # صفحات HTML: لا تُخزَّن مؤقتاً — وإلا لم يرَ الزائر أي نشر جديد قبل ساعة
 /arb/*
   Content-Language: ar
