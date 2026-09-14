@@ -205,6 +205,7 @@ qurankarem.org · altayebamer.com. **midad.gallery حُذف — النطاق غ�
 
 | # | البند | الحالة |
 |---|---|---|
+| 13 | **المعيار المتجاوب الموحّد** | ✅ طُبِّق 2026-09-14 (commit ad6496d). عشر نقاط توقف ← ثلاث (600/1024/1440). الفحص: `python3 tools/lint-responsive.py .` يجب أن يخرج بصفر، و`tools/overflow-harness.html` يُنسخ للجذر ويُفتح عبر `python3 -m http.server`. المصدر المشترك `~/Claude Workspace/shared/` — لا تُعدَّل نسخة الموقع، عدّل المصدر وانسخ |
 | 1 | **تفعيل Cloudflare Web Analytics** | ⏳ يحتاج لوحة تحكم Cloudflare — لا قياس إطلاقاً حالياً |
 | 2 | **تسجيل الموقع في Google Search Console + رفع sitemap** | ⏳ يحتاج حساب المالك |
 | 4 | تكافؤ اللغتين في المقالات | ✅ 14 مقالة في كل لغة، و hreflang صار مبنياً على الوجود الفعلي لا على افتراض ثابت |
