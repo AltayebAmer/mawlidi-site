@@ -340,6 +340,97 @@ function injectBnav() {
   return done;
 }
 
+// ═══ كتلتان مشتركتان في كل صفحة: شريط المشاريع الأخرى، وركن «رد المعروف» ═══
+// كانتا تُحقنان بسكربت خارجي لمرة واحدة، فمحاهما أول إعادة بناء من 74 صفحة.
+// مصدرهما هنا الآن، ويُعاد تطبيقهما في كل بناء على نمط injectBnav().
+const BLOCKS = {
+  arb: {
+    works: `<!-- works:begin -->
+<section class="works-band">
+  <div class="wb-head">
+    <div class="wb-eyebrow">مشاريع أخرى</div>
+    <div class="wb-title">من تصميم الطيب عامر</div>
+  </div>
+  <div class="wb-panel wb-free">
+    <h4 class="wb-h">مشاريع مجانية</h4>
+    <p class="wb-note">كل مشروع صُمِّم ليكون مجانياً ونافعاً. شاركه مع من ينتفع به.</p>
+    <div class="wb-grid">
+      
+      <a href="https://qurankarem.org" target="_blank" rel="noopener"><b>القرآن الكريم</b><span>مصحف رقمي</span></a>
+      <a href="https://007.gallery" target="_blank" rel="noopener"><b>007.gallery</b><span>أدوات الصور</span></a>
+      <a href="https://awraqna.com" target="_blank" rel="noopener"><b>أوراقنا</b><span>أوراق عمل للطباعة</span></a>
+    </div>
+  </div>
+</section>
+<!-- works:end -->`,
+    support: `<!-- support:begin -->
+<section class="foot-support">
+  <h3>❤ ادعمنا — «رد المعروف»</h3>
+  <p>مَوْلِدي مجاني بالكامل وحساباته تجري داخل متصفحك. مشاهدة إعلان بسيط، أو مشاركة الموقع مع صديق، تساعدنا على إبقاء كل شيء مجانياً.</p>
+</section>
+<!-- support:end -->`
+  },
+  eng: {
+    works: `<!-- works:begin -->
+<section class="works-band">
+  <div class="wb-head">
+    <div class="wb-eyebrow">Other projects</div>
+    <div class="wb-title">Designed by Altayeb Amer</div>
+  </div>
+  <div class="wb-panel wb-free">
+    <h4 class="wb-h">Free projects</h4>
+    <p class="wb-note">Each project is built to be free and useful. Share it with someone who would benefit.</p>
+    <div class="wb-grid">
+      
+      <a href="https://qurankarem.org" target="_blank" rel="noopener"><b>Quran Kareem</b><span>Digital Quran</span></a>
+      <a href="https://007.gallery" target="_blank" rel="noopener"><b>007.gallery</b><span>Image tools</span></a>
+      <a href="https://awraqna.com" target="_blank" rel="noopener"><b>Awraqna</b><span>Printable worksheets</span></a>
+    </div>
+  </div>
+</section>
+<!-- works:end -->`,
+    support: `<!-- support:begin -->
+<section class="foot-support">
+  <h3>❤ Support us — pay it forward</h3>
+  <p>Mawlidi is completely free and its calculations run inside your browser. Viewing a simple ad, or sharing the site with a friend, helps us keep everything free.</p>
+</section>
+<!-- support:end -->`
+  }
+};
+
+function injectBlocks() {
+  let done = 0;
+  const walk = (dir, lang) => {
+    for (const e of fs.readdirSync(dir, { withFileTypes:true })) {
+      const f = path.join(dir, e.name);
+      if (e.isDirectory()) { walk(f, lang); continue; }
+      if (e.name !== 'index.html') continue;
+
+      let h = fs.readFileSync(f, 'utf8');
+      const before = h;
+
+      // إزالة أي نسخة سابقة أولاً — وإلا تراكمت مع كل بناء
+      h = h.replace(/<!-- works:begin -->[\s\S]*?<!-- works:end -->\n?/g, '');
+      h = h.replace(/<!-- support:begin -->[\s\S]*?<!-- support:end -->\n?/g, '');
+
+      // المرساة الوحيدة الموجودة في الصفحات الـ76 كلها. الفوتر لا يصلح:
+      // صفحتا التقويم بلا <footer class="foot"> بهذه الصيغة.
+      // وصفحتا التقويم تكتبانها <div class="no-print" data-artist-corner>
+      // فالمطابقة بتعبير لا بنصّ حرفي، ومع نقل no-print إلى الكتلتين حتى
+      // لا يظهرا في المطبوع.
+      const m = h.match(/<div[^>]*data-artist-corner[^>]*><\/div>/);
+      if (m) {
+        const noPrint = m[0].includes('no-print');
+        const dress = b => noPrint ? b.replace(/class="(works-band|foot-support)"/, 'class="$1 no-print"') : b;
+        h = h.replace(m[0], m[0] + '\n' + dress(BLOCKS[lang].works) + '\n' + dress(BLOCKS[lang].support));
+        if (h !== before) { fs.writeFileSync(f, h); done++; }
+      }
+    }
+  };
+  for (const lang of ['arb','eng']) walk(path.join(ROOT, lang), lang);
+  return done;
+}
+
 const today = new Date().toISOString().slice(0, 10);
 
 const urls = [
@@ -486,6 +577,7 @@ if (!CHECK) fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), xml);
 
 if (!CHECK) {
   console.log(`الشريط السفلي: حُقن في ${injectBnav()} صفحة`);
+  console.log(`الكتلتان المشتركتان: حُقنتا في ${injectBlocks()} صفحة`);
   const n = injectAnalytics();
   if (CF_ANALYTICS_TOKEN) console.log(`Cloudflare Analytics: حُقن في ${n} صفحة`);
   else if (n) console.log(`Cloudflare Analytics: أُزيل من ${n} صفحة (لا token)`);
