@@ -3,13 +3,19 @@
    مصدر الأنماط: هذا الملف وحده. كانت مكرّرة في article.css وفي
    الرئيسيتين، فسقطت foot-support من نسخة الرئيسيتين ولم تُنسَّق. */
 
-/* الهامش العلوي: الكتلتان صارتا متجاورتين مباشرةً بعد نقل foot-support
+/* العرض 760px لا var(--measure): مقاس قراءة النصّ الطويل لا يناسب صندوقاً
+   من سطرين يقف تحت wb-panel — والتفاوت بين 609 و760 كان يظهر على الشاشات
+   العريضة. الآن الصندوقان بعرض واحد.
+   الهامش العلوي: الكتلتان صارتا متجاورتين مباشرةً بعد نقل foot-support
    خارج <footer> (الذي كان يمنحها margin-top:48px)، فلولاه لالتصقتا. */
-.foot-support{max-width:var(--measure);margin:clamp(20px,3.5vw,32px) auto 22px;text-align:center;
+.foot-support{max-width:760px;margin:clamp(20px,3.5vw,32px) auto 22px;text-align:center;
   background:var(--card);border:1px solid rgba(201,168,76,.28);border-radius:16px;padding:18px 20px}
 .foot-support h3{font-size:15px;font-weight:800;color:var(--gold-light);margin-bottom:8px}
 .foot-support p{color:var(--muted);font-size:13.5px;line-height:1.9;margin:0}
-.works-band{max-width:var(--wide,1100px);margin:clamp(34px,5vw,46px) auto 0;padding-inline:var(--s3,18px)}
+/* width:100% لأن .page في الرئيسيتين حاوية flex متمركزة، فبدونه تتقلّص
+   الكتلة إلى مقاس محتواها وتضيق wb-panel عن 760 فيختلّ تطابقها مع
+   foot-support. في الصفحات المولَّدة الكتلة في التدفّق العادي فلا أثر له. */
+.works-band{width:100%;max-width:var(--wide,1100px);margin:clamp(34px,5vw,46px) auto 0;padding-inline:var(--s3,18px)}
 .wb-head{text-align:center;margin-bottom:18px}
 .wb-eyebrow{font-size:11px;letter-spacing:.2em;color:var(--muted)}
 .wb-title{font-size:clamp(18px,3.2vw,24px);font-weight:800;color:var(--gold-light);margin-top:6px}
@@ -24,4 +30,4 @@
 /* الصفحتان الرئيسيتان وحدهما تحملان .page: حاويتهما بلا حشوة جانبية،
    فالصندوق يلتصق بالحافتين بينما works-band تُزيح نفسها بـpadding-inline.
    التقييد بـ.page يمنع مسّ الصفحات الـ74 التي يكفيها حشو حاويتها. */
-.page > .foot-support{max-width:min(var(--measure), 100% - 2 * var(--s3,18px))}
+.page > .foot-support{max-width:min(760px, 100% - 2 * var(--s3,18px))}
