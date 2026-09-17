@@ -3,7 +3,9 @@
    مصدر الأنماط: هذا الملف وحده. كانت مكرّرة في article.css وفي
    الرئيسيتين، فسقطت foot-support من نسخة الرئيسيتين ولم تُنسَّق. */
 
-.foot-support{max-width:var(--measure);margin:0 auto 22px;text-align:center;
+/* الهامش العلوي: الكتلتان صارتا متجاورتين مباشرةً بعد نقل foot-support
+   خارج <footer> (الذي كان يمنحها margin-top:48px)، فلولاه لالتصقتا. */
+.foot-support{max-width:var(--measure);margin:clamp(20px,3.5vw,32px) auto 22px;text-align:center;
   background:var(--card);border:1px solid rgba(201,168,76,.28);border-radius:16px;padding:18px 20px}
 .foot-support h3{font-size:15px;font-weight:800;color:var(--gold-light);margin-bottom:8px}
 .foot-support p{color:var(--muted);font-size:13.5px;line-height:1.9;margin:0}
@@ -22,4 +24,4 @@
 /* الصفحتان الرئيسيتان وحدهما تحملان .page: حاويتهما بلا حشوة جانبية،
    فالصندوق يلتصق بالحافتين بينما works-band تُزيح نفسها بـpadding-inline.
    التقييد بـ.page يمنع مسّ الصفحات الـ74 التي يكفيها حشو حاويتها. */
-.page > .foot-support{margin-inline:var(--s3,18px)}
+.page > .foot-support{max-width:min(var(--measure), 100% - 2 * var(--s3,18px))}

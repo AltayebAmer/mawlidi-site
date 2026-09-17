@@ -1,5 +1,5 @@
-@import url('responsive.css');
-@import url('blocks.css');  /* المعيار المتجاوب الموحّد — المصدر: shared/responsive.css */
+/* responsive.css وblocks.css تُربطان مباشرةً في كل صفحة (stampAssets)
+   لا بـ@import: الاستيراد يجعلهما رهينتَي نسخة هذا الملف المخزَّنة. */
 /* ═══ MAWLIDI — أنماط صفحات المقالات المستقلة ═══ */
 :root{
   --gold:#C9A84C;--gold-light:#E8C97A;--bg:#07071A;--bg2:#0C0C22;

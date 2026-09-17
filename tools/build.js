@@ -7,6 +7,7 @@
    ═══════════════════════════════════════════════ */
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 
 const ROOT = path.resolve(__dirname, '..');
 const SITE = 'https://mawlidi.com';
@@ -431,6 +432,53 @@ function injectBlocks() {
   return done;
 }
 
+// ═══ ربط الأنماط المشتركة وبصمة تمنع تقديم نسخة قديمة ═══
+// روابط الأنماط مكتوبة في عشرة ملفات مولِّدة، وassets/* تُخزَّن يوماً كاملاً
+// بـmax-age=86400. فملف CSS جديد لا يصل من حمّل الصفحة قبل ساعة، وسلسلة
+// @import تجعل الملفات المستوردة رهينة نسخة article.css المخزَّنة.
+// البصمة مشتقّة من محتوى ملفات CSS: تتغيّر حين يتغيّر أيٌّ منها، وتثبت
+// حين لا يتغيّر شيء — فيبقى البناء ثابتاً.
+function cssStamp() {
+  const dir = path.join(ROOT, 'assets');
+  const names = fs.readdirSync(dir).filter(n => n.endsWith('.css')).sort();
+  const h = crypto.createHash('md5');
+  for (const n of names) h.update(n).update(fs.readFileSync(path.join(dir, n)));
+  return h.digest('hex').slice(0, 8);
+}
+
+function stampAssets(v) {
+  let done = 0;
+  const visit = f => {
+    let h = fs.readFileSync(f, 'utf8');
+    const before = h;
+
+    // الملفان المشتركان يُربطان بجوار article.css بالبادئة النسبية نفسها
+    const m = h.match(/<link rel="stylesheet" href="((?:\.\.\/)*|\/)assets\/article\.css[^"]*">/);
+    if (m) {
+      const pre = m[1];
+      for (const name of ['responsive.css', 'blocks.css']) {
+        if (!h.includes('assets/' + name)) {
+          h = h.replace(m[0], `<link rel="stylesheet" href="${pre}assets/${name}">\n` + m[0]);
+        }
+      }
+    }
+    h = h.replace(/(href="(?:(?:\.\.\/)*|\/)assets\/[\w.-]+\.css)(\?v=[^"]*)?"/g, `$1?v=${v}"`);
+
+    if (h !== before) { fs.writeFileSync(f, h); done++; }
+  };
+  const walk = dir => {
+    for (const e of fs.readdirSync(dir, { withFileTypes:true })) {
+      const f = path.join(dir, e.name);
+      if (e.isDirectory()) walk(f);
+      else if (e.name === 'index.html') visit(f);
+    }
+  };
+  for (const lang of ['arb','eng']) walk(path.join(ROOT, lang));
+  const e404 = path.join(ROOT, '404.html');
+  if (fs.existsSync(e404)) visit(e404);
+  return done;
+}
+
 const today = new Date().toISOString().slice(0, 10);
 
 const urls = [
@@ -578,6 +626,8 @@ if (!CHECK) fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), xml);
 if (!CHECK) {
   console.log(`الشريط السفلي: حُقن في ${injectBnav()} صفحة`);
   console.log(`الكتلتان المشتركتان: حُقنتا في ${injectBlocks()} صفحة`);
+  const v = cssStamp();
+  console.log(`بصمة الأنماط ${v}: خُتمت في ${stampAssets(v)} صفحة`);
   const n = injectAnalytics();
   if (CF_ANALYTICS_TOKEN) console.log(`Cloudflare Analytics: حُقن في ${n} صفحة`);
   else if (n) console.log(`Cloudflare Analytics: أُزيل من ${n} صفحة (لا token)`);
