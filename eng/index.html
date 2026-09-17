@@ -22,8 +22,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Mawlidi","description":"Hijri Birthday Calculator","url":"https://mawlidi.com/eng/","applicationCategory":"UtilityApplication","inLanguage":"en","author":{"@type":"Person","name":"Altayeb Amer"}}</script>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/responsive.css?v=50efed30">
-<link rel="stylesheet" href="/assets/blocks.css?v=50efed30">
+<link rel="stylesheet" href="/assets/responsive.css?v=5cc2d838">
+<link rel="stylesheet" href="/assets/blocks.css?v=5cc2d838">
 <style>
 :root{--gold:#C9A84C;--gold-light:#E8C97A;--bg:#07071A;--bg2:#0C0C22;--card:rgba(255,255,255,0.04);--border:rgba(201,168,76,0.18);--border2:rgba(255,255,255,0.07);--text:#F0EDE8;--muted:rgba(240,237,232,0.5);--green:#4CAF7D;--red:#E94560;--platinum:#E8E8F0;--safe:env(safe-area-inset-bottom,0px);--measure:68ch;--wide:1100px;--pad:clamp(18px,4.5vw,40px);}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
@@ -302,11 +302,6 @@ body{padding-bottom:calc(78px + env(safe-area-inset-bottom,0px));}  /* مساح�
 #toast{position:fixed;bottom:max(90px,calc(var(--safe)+80px));left:50%;transform:translateX(-50%) translateY(20px);background:rgba(20,20,40,0.96);border:1px solid var(--border);border-radius:14px;padding:12px 24px;font-size:13px;color:var(--gold-light);pointer-events:none;opacity:0;transition:all .3s;z-index:9999;white-space:nowrap;backdrop-filter:blur(16px);}
 #toast.on{opacity:1;transform:translateX(-50%) translateY(0);}
 .pgbar{position:fixed;top:0;inset-inline-start:0;height:2px;background:var(--gold);z-index:9999;width:0%;transition:width .1s;box-shadow:0 0 8px rgba(201,168,76,0.8);}
-.footer{text-align:center;padding:40px 20px max(100px,calc(var(--safe)+90px));font-size:11px;color:rgba(255,255,255,0.2);line-height:1.8;}
-.footer-brand{font-family:'Playfair Display',serif;font-size:18px;color:rgba(201,168,76,0.4);font-weight:700;margin-bottom:6px;}
-.footer-links{display:flex;gap:16px;justify-content:center;margin-bottom:8px;flex-wrap:wrap;}
-.footer-link{font-size:11px;color:rgba(201,168,76,0.35);cursor:pointer;text-transform:uppercase;}
-.footer-link:hover{color:var(--gold);}
 
 /* بعد قاعدة العمودين المعرَّفة أعلاه، فتغلبها بترتيب المصدر */
 @media(min-width:1024px){ .teaser-cards{grid-template-columns:repeat(3,1fr);} }
@@ -492,32 +487,7 @@ body{padding-bottom:calc(78px + env(safe-area-inset-bottom,0px));}  /* مساح�
 </section>
 <!-- support:end -->
 
-  <div class="footer">
-    <div class="footer-brand">Mawlidi 🌙</div>
-    <div class="footer-links">
-      <a class="footer-link" href="about/" style="text-decoration:none;">About</a>
-      <a class="footer-link" href="observatory/" style="text-decoration:none;">Observatory</a>
-      <a class="footer-link" href="articles/" style="text-decoration:none;">Articles</a>
-      <a class="footer-link" href="articles/" style="text-decoration:none;">Article Archive</a>
-      <a class="footer-link" href="converter/" style="text-decoration:none;">Date Converter</a>
-      <a class="footer-link" href="calendar/" style="text-decoration:none;">Hijri Calendar</a>
-      <a class="footer-link" href="age/" style="text-decoration:none;">Age Calculator</a>
-      <a class="footer-link" href="countdown/" style="text-decoration:none;">Countdown</a>
-      <a class="footer-link" href="moon/" style="text-decoration:none;">Birth Moon</a>
-      <a class="footer-link" href="card/" style="text-decoration:none;">Birthday Card</a>
-      <a class="footer-link" href="mansions/" style="text-decoration:none;">Lunar Mansions</a>
-      <a class="footer-link" href="zodiac/" style="text-decoration:none;">Sun &amp; Zodiac</a>
-      <a class="footer-link" href="about/" style="text-decoration:none;">About</a>
-      <a class="footer-link" href="privacy/" style="text-decoration:none;">Privacy</a>
-      <a class="footer-link" href="terms/" style="text-decoration:none;">Terms</a>
-      <a class="footer-link" href="contact/" style="text-decoration:none;">Contact</a>
-      <a class="footer-link" href="ramadan-2027/" style="text-decoration:none;">Ramadan 2027</a>
-      <a class="footer-link" href="eid-alfitr-2027/" style="text-decoration:none;">Eid al-Fitr 2027</a>
-      <a class="footer-link" href="eid-aladha-2027/" style="text-decoration:none;">Eid al-Adha 2027</a>
-      <a class="footer-link" href="advertise/" style="text-decoration:none;">Advertise</a>
-    </div>
-    Altayeb Amer · Artist Altayeb · All rights reserved © 2025 · mawlidi.com
-  </div>
+  
 </div>
 
 <div id="rs">
@@ -542,6 +512,7 @@ body{padding-bottom:calc(78px + env(safe-area-inset-bottom,0px));}  /* مساح�
 
 
 
+<div class="site-footer" data-foot><div class="footer-brand">Mawlidi 🌙</div><div class="footer-links"><a class="footer-link" href="about/">About</a><a class="footer-link" href="observatory/">Observatory</a><a class="footer-link" href="articles/">Articles</a><a class="footer-link" href="converter/">Date Converter</a><a class="footer-link" href="calendar/">Hijri Calendar</a><a class="footer-link" href="age/">Age Calculator</a><a class="footer-link" href="countdown/">Countdown</a><a class="footer-link" href="moon/">Birth Moon</a><a class="footer-link" href="card/">Birthday Card</a><a class="footer-link" href="mansions/">Lunar Mansions</a><a class="footer-link" href="zodiac/">Sun &amp; Zodiac</a><a class="footer-link" href="privacy/">Privacy</a><a class="footer-link" href="terms/">Terms</a><a class="footer-link" href="contact/">Contact</a><a class="footer-link" href="ramadan-2027/">Ramadan 2027</a><a class="footer-link" href="eid-alfitr-2027/">Eid al-Fitr 2027</a><a class="footer-link" href="eid-aladha-2027/">Eid al-Adha 2027</a><a class="footer-link" href="advertise/">Advertise</a></div><div class="footer-copy">Altayeb Amer · Artist Altayeb · All rights reserved © 2026 · mawlidi.com</div></div>
 <nav class="bnav" id="bnav-main">
   <a href="./" class="on"><span class="ni">🌙</span><span class="nl">Mawlidi</span></a>
   <a href="observatory/"><span class="ni">🔭</span><span class="nl">Observatory</span></a>

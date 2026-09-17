@@ -31,3 +31,17 @@
    فالصندوق يلتصق بالحافتين بينما works-band تُزيح نفسها بـpadding-inline.
    التقييد بـ.page يمنع مسّ الصفحات الـ74 التي يكفيها حشو حاويتها. */
 .page > .foot-support{max-width:min(760px, 100% - 2 * var(--s3,18px))}
+
+/* ═══ فوتر الموقع — يُحقن في الـ76 بـinjectFooter() ═══
+   الاسم site-footer لا footer: الأخير كان محجوزاً لنسخة الرئيسيتين
+   المضمَّنة، و<footer class="foot"> في الصفحات المولَّدة شيء آخر. */
+.site-footer{text-align:center;padding:40px 20px 0;font-size:11px;
+  color:rgba(255,255,255,0.2);line-height:1.8}
+.site-footer .footer-brand{font-family:'Playfair Display',serif;font-size:18px;
+  color:rgba(201,168,76,0.4);font-weight:700;margin-bottom:6px}
+.site-footer .footer-links{display:flex;gap:16px;justify-content:center;
+  margin-bottom:8px;flex-wrap:wrap}
+.site-footer .footer-link{font-size:11px;color:rgba(201,168,76,0.35);
+  text-decoration:none;text-transform:uppercase}
+.site-footer .footer-link:hover{color:var(--gold)}
+.site-footer .footer-copy{font-size:11px}

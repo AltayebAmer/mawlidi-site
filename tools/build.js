@@ -479,6 +479,50 @@ function stampAssets(v) {
   return done;
 }
 
+// ═══ فوتر الموقع — مصدر واحد للصفحات الـ76 ═══
+// كان في الرئيسيتين وحدهما، بينما تنتهي الصفحات الـ74 بزرّ وحيد، فاختلّ
+// التطابق بين صفحات الموقع. الروابط نسبية إلى جذر اللغة فتُسبق حسب العمق
+// كما في injectBnav(). أُزيل تكراران كانا فيه: «من نحن» مرتين، و«أرشيف
+// المقالات» تشير إلى articles/ نفسها ولا صفحة أرشيف مستقلة في الموقع.
+const FOOT = {
+  arb: { brand:'مَوْلِدي 🌙', by:'الفنان الطيب عامر · Altayeb Amer · جميع الحقوق محفوظة ©',
+         links: [["about/", "من نحن"], ["observatory/", "المرصد"], ["articles/", "المقالات"], ["converter/", "محوّل التاريخ"], ["calendar/", "التقويم الهجري"], ["age/", "حاسبة العمر"], ["countdown/", "العد التنازلي"], ["moon/", "قمر ميلادك"], ["card/", "بطاقة الميلاد"], ["mansions/", "منازل القمر"], ["zodiac/", "الشمس والبروج"], ["privacy/", "الخصوصية"], ["terms/", "الشروط"], ["contact/", "تواصل"], ["ramadan-2027/", "رمضان 2027"], ["eid-alfitr-2027/", "عيد الفطر 2027"], ["eid-aladha-2027/", "عيد الأضحى 2027"], ["advertise/", "أعلن معنا"]] },
+  eng: { brand:'Mawlidi 🌙', by:'Altayeb Amer · Artist Altayeb · All rights reserved ©',
+         links: [["about/", "About"], ["observatory/", "Observatory"], ["articles/", "Articles"], ["converter/", "Date Converter"], ["calendar/", "Hijri Calendar"], ["age/", "Age Calculator"], ["countdown/", "Countdown"], ["moon/", "Birth Moon"], ["card/", "Birthday Card"], ["mansions/", "Lunar Mansions"], ["zodiac/", "Sun &amp; Zodiac"], ["privacy/", "Privacy"], ["terms/", "Terms"], ["contact/", "Contact"], ["ramadan-2027/", "Ramadan 2027"], ["eid-alfitr-2027/", "Eid al-Fitr 2027"], ["eid-aladha-2027/", "Eid al-Adha 2027"], ["advertise/", "Advertise"]] }
+};
+
+function injectFooter(year) {
+  let done = 0;
+  const walk = (dir, lang) => {
+    for (const e of fs.readdirSync(dir, { withFileTypes:true })) {
+      const f = path.join(dir, e.name);
+      if (e.isDirectory()) { walk(f, lang); continue; }
+      if (e.name !== 'index.html') continue;
+
+      const rel = path.relative(path.join(ROOT, lang), f);
+      const pre = '../'.repeat(rel.split(path.sep).length - 1);
+      const F = FOOT[lang];
+      const links = F.links
+        .map(([href, txt]) => `<a class="footer-link" href="${pre}${href}">${txt}</a>`)
+        .join('');
+      const tag = `<div class="site-footer" data-foot>`
+        + `<div class="footer-brand">${F.brand}</div>`
+        + `<div class="footer-links">${links}</div>`
+        + `<div class="footer-copy">${F.by} ${year} · mawlidi.com</div>`
+        + `</div>\n`;
+
+      let h = fs.readFileSync(f, 'utf8');
+      const before = h;
+      h = h.replace(/<div class="site-footer" data-foot>[\s\S]*?<\/div><\/div>\n?/g, '');
+      // قبل الشريط السفلي مباشرةً — موجود في الصفحات الـ76 كلها
+      h = h.replace(/<nav class="bnav"/, tag + '<nav class="bnav"');
+      if (h !== before) { fs.writeFileSync(f, h); done++; }
+    }
+  };
+  for (const lang of ['arb','eng']) walk(path.join(ROOT, lang), lang);
+  return done;
+}
+
 const today = new Date().toISOString().slice(0, 10);
 
 const urls = [
@@ -626,6 +670,7 @@ if (!CHECK) fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), xml);
 if (!CHECK) {
   console.log(`الشريط السفلي: حُقن في ${injectBnav()} صفحة`);
   console.log(`الكتلتان المشتركتان: حُقنتا في ${injectBlocks()} صفحة`);
+  console.log(`الفوتر: حُقن في ${injectFooter(new Date().getFullYear())} صفحة`);
   const v = cssStamp();
   console.log(`بصمة الأنماط ${v}: خُتمت في ${stampAssets(v)} صفحة`);
   const n = injectAnalytics();
